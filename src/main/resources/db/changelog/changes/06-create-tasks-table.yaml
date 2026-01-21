@@ -1,0 +1,71 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-tasks-table
+      author: vitaliy
+      changes:
+        - createTable:
+            tableName: tasks
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: description
+                  type: TEXT
+
+              - column:
+                  name: task_priority
+                  type: ENUM('LOW','MEDIUM','HIGH')
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: task_status
+                  type: ENUM('NOT_STARTED','IN_PROGRESS','COMPLETED')
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: due_date
+                  type: DATE
+
+              - column:
+                  name: project_id
+                  type: BIGINT
+                  constraints:
+                    nullable: true
+
+              - column:
+                  name: assignee_id
+                  type: BIGINT
+
+        - addForeignKeyConstraint:
+            constraintName: fk_tasks_project_id
+            baseTableName: tasks
+            baseColumnNames: project_id
+            referencedTableName: projects
+            referencedColumnNames: id
+            onDelete: CASCADE
+
+        - addForeignKeyConstraint:
+            constraintName: fk_tasks_assignee_id
+            baseTableName: tasks
+            baseColumnNames: assignee_id
+            referencedTableName: users
+            referencedColumnNames: id
+
+        - createIndex:
+            indexName: idx_tasks_project_id
+            tableName: tasks
+            columns:
+              - name: project_id

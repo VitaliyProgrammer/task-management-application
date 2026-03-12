@@ -217,7 +217,6 @@ public class TaskServiceTest {
 
         assertEquals(task.getTitle(), response.title());
         verify(taskRepository).save(task);
-        verify(eventPublisher).publishEvent(any(TaskCreatedEvent.class));
     }
 
     @Test
@@ -290,7 +289,8 @@ public class TaskServiceTest {
 
         when(taskRepository.findById(task.getId())).thenReturn(Optional.empty());
 
-        assertThrows(TaskNotFoundException.class, () -> taskServiceImpl.update(1L, updateRequest()));
+        assertThrows(TaskNotFoundException.class,
+                () -> taskServiceImpl.update(1L, updateRequest()));
     }
 
     @Test

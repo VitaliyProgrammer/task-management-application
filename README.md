@@ -76,7 +76,7 @@ Key engineering challenges addressed in this project:
 - 🔐 Secure storage and encryption of third-party credentials
 - ☁ Integrating with cloud APIs(Dropbox, Google Calendar, Email, Telegram)
 - ⚙ Managing asynchronous execution of external service calls
-- Designing scalable integration layers and configuration abstractions
+- 🧱 Designing scalable integration layers and configuration abstractions
 - 🧪 Writing mocking and integration tests that simulate real workflow
   (register -> login -> create project -> create task)
 

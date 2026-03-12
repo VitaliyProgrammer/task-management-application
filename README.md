@@ -61,7 +61,7 @@ The system is built following production-grade engineering principles:
 - MySQL database
 - Docker containerization
 
-***
+---
 
 ## 🎯 Motivation
 
@@ -80,7 +80,7 @@ Key engineering challenges addressed in this project:
 - 🧪 Writing mocking and integration tests that simulate real workflow
   (register -> login -> create project -> create task)
 
-***
+---
 
 ## 📌 Features / Functionality
 
@@ -92,7 +92,7 @@ Key engineering challenges addressed in this project:
 - Secure storage of external service credentials
 - Encryption of sensitive user data
 
-***
+---
 📝 **Project management**
 
 - Create, read, update, and delete projects
@@ -100,7 +100,7 @@ Key engineering challenges addressed in this project:
 - Start/end date
 - Project lifecycle management
 
-***
+---
 📝 **Task management**
 
 - Create, read, update, and delete tasks
@@ -109,7 +109,7 @@ Key engineering challenges addressed in this project:
 - Filtering and searching tasks
 - Task lifecycle management
 
-***
+---
 📡 **Notification System**
 
 The application automatically reacts to task lifecycle events and events
@@ -119,7 +119,7 @@ and triggers external notifications:
 - Email notifications
 - Google Calendar event synchronization
 
-***
+---
 
 ## ☁ External Integrations
 
@@ -144,21 +144,21 @@ and triggers external notifications:
 - File upload for task attachments
 - External file storage management
 
-***
+---
 
 - **⚡ Asynchronous Processing**
 - External API executed asynchronously
 - Improves application performance and responsiveness
 - Prevent blocking business operations
 
-***
+---
 
 ## 🏗 Architecture & Technology Stack
 
 The application follows a layered + integration-oriented architecture,
 designed for scalability and maintainability.
 
-***
+---
 🔹 Presentation Layer(Controllers)
 
 Responsible for:
@@ -168,7 +168,7 @@ Responsible for:
 - DTO mapping
 - Security entry points
 
-***
+---
 🔹 Repository Layer
 
 Responsible for:
@@ -176,7 +176,7 @@ Responsible for:
 - Database communication
 - Entity persistence via Spring Data JPA
 
-***
+---
 🔹 DTO Layer
 
 Responsible for:
@@ -185,7 +185,7 @@ Responsible for:
 - Data transformation between layers
 - Validation boundaries
 
-***
+---
 🔹 Security Layer
 
 Includes:
@@ -194,7 +194,7 @@ Includes:
 - Role-based authorization
 - Credential encryption services
 
-***
+---
 🔹 Integration Layer (External Services)
 
 Handles communication with third-party services through specialized services
@@ -213,7 +213,7 @@ Integration infrastructure includes:
 - Configuration abstraction
 - Property-based environment configuration
 
-***
+---
 🔹 Event & Listener Layer
 
 Implement event-driven workflow using:
@@ -227,7 +227,7 @@ Examples:
 - EmailNotificationTaskListener
 - TelegramNotificationTaskListener
 
-***
+---
 🔹 Configuration Layer
 Centralized infrastructure configuration:
 
@@ -238,14 +238,14 @@ Centralized infrastructure configuration:
 - AsyncConfiguration
 - SwaggerConfiguration
 
-***
+---
 🔹 Async Processing Layer
 
 - Executes external service operations asynchronously
 - Improves scalability
 - Prevent bocking HTTP requests
 
-***
+---
 🔹 Testing Layer
 
 Includes:
@@ -253,7 +253,7 @@ Includes:
 - Unit tests (Mockito)
 - Integration tests
 
-***
+---
 
 ## Technology Stack
 
@@ -301,7 +301,7 @@ Includes:
 ![UML Diagram](Application%20architectre.png)
 ![UML Diagram](System%20integration.png)
 
-***
+---
 
 ## 🐳 Infrastructure & Deployment
 
@@ -320,7 +320,7 @@ This approach guarantees:
 - simplified deployment
 - consistent behavior across systems
 
-***
+---
 
 ## 🛠 Local Setup / Getting Started
 
@@ -335,7 +335,7 @@ Git
 A web browser (to access Swagger UI)
 ```
 
-***
+---
 
 ### 2️⃣ Run using Docker Compose(Recommended)
 
@@ -348,7 +348,7 @@ A web browser (to access Swagger UI)
 Application will be available at:
 
 ```bash 
-http://localhost:9090
+http://localhost:8080
 ```
 
 🛑 Stop the Application
@@ -367,7 +367,7 @@ docker pull vitaliyjavaprog/task-management-application:1.0.1
 ⚠️This image requires MySQL database.
 For full environment setup, using Docker Compose is recommended.️
 
-***
+---
 
 ## External Services Used
 
@@ -376,17 +376,18 @@ For full environment setup, using Docker Compose is recommended.️
 - Dropbox API
 - SMTP Email Services
 
-***
+---
 
 ## 📘 API Documentation
 
 All endpoints are documented in Swagger UI:
 [Open Swagger UI](http://localhost:9090/swagger-ui/index.html)
 
-***
+---
 
 ## 🎥 Video Presentation
 
+---
 A short video walk through of the Task Management application is available here:
 
 The video demonstrates:
@@ -402,7 +403,7 @@ The video demonstrates:
 
 👉 https://drive.google.com/file/d/1ePOL9sHcYB-oYl8B11FDmNZyemhO3a7x/view?usp=sharing
 
-***
+---
 
 ## 📌 Final Notes
 

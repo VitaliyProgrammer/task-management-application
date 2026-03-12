@@ -2,8 +2,10 @@
 *.jar
 *.war
 *.iml
-/.idea/
-/.mvn/
+
+.claude/
+.idea/
+.mvn/
 
 .env
 src/main/resources/google/credentials.json

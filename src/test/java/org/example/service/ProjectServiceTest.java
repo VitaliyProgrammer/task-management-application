@@ -3,15 +3,15 @@ package org.example.service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import org.example.dto.ProjectCreateRequestDto;
-import org.example.dto.ProjectResponseDto;
-import org.example.dto.ProjectUpdateRequestDto;
-import org.example.entity.Project;
-import org.example.entity.status.ProjectStatus;
-import org.example.exception.ProjectNotFoundException;
-import org.example.mapper.ProjectMapper;
-import org.example.repository.ProjectRepository;
-import org.example.service.impl.ProjectServiceImpl;
+import org.example.application.mapper.ProjectMapper;
+import org.example.application.service.impl.ProjectServiceImpl;
+import org.example.domain.entity.Project;
+import org.example.domain.entity.status.ProjectStatus;
+import org.example.domain.exception.ProjectNotFoundException;
+import org.example.infrastructure.repository.ProjectRepository;
+import org.example.presentation.dto.request.ProjectCreateRequestDto;
+import org.example.presentation.dto.request.ProjectUpdateRequestDto;
+import org.example.presentation.dto.response.ProjectResponseDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -58,42 +58,26 @@ public class ProjectServiceTest {
 
     private ProjectCreateRequestDto requestProject() {
 
-        return new ProjectCreateRequestDto(
-                "Test project",
-                "About test project",
-                FIXED_DATE,
-                null
-        );
+        return new ProjectCreateRequestDto("Test project", "About test project", FIXED_DATE, null);
     }
 
     private ProjectResponseDto responseProject() {
 
         return new ProjectResponseDto(
-                1L,
-                "Test project",
-                "About test project",
-                FIXED_DATE,
-                null,
-                "INITIATED"
-        );
+                1L, "Test project", "About test project", FIXED_DATE, null, "INITIATED");
     }
 
     private ProjectUpdateRequestDto updateRequest() {
 
         return new ProjectUpdateRequestDto(
-                "Updated project",
-                "About updated project",
-                FIXED_DATE,
-                null
-        );
+                "Updated project", "About updated project", FIXED_DATE, null);
     }
 
     @Test
     @DisplayName("Create project - save project and return DTO")
     void create() {
 
-        when(projectMapper.toEntity(requestProject()))
-                .thenReturn(createProject());
+        when(projectMapper.toEntity(requestProject())).thenReturn(createProject());
         when(projectRepository.save(any())).thenReturn(createProject());
         when(projectMapper.toDto(any())).thenReturn(responseProject());
 
@@ -108,8 +92,7 @@ public class ProjectServiceTest {
     @DisplayName("Get project by id - existing project")
     void getById() {
 
-        when(projectRepository.findById(1L))
-                .thenReturn(Optional.of(createProject()));
+        when(projectRepository.findById(1L)).thenReturn(Optional.of(createProject()));
         when(projectMapper.toDto(any(Project.class))).thenReturn(responseProject());
 
         ProjectResponseDto result = projectServiceImpl.getById(1L);
@@ -123,12 +106,10 @@ public class ProjectServiceTest {
 
         Page<Project> page = new PageImpl<>(List.of(createProject()));
 
-        when(projectRepository.findAll(any(Pageable.class)))
-                .thenReturn(page);
+        when(projectRepository.findAll(any(Pageable.class))).thenReturn(page);
         when(projectMapper.toDto(any(Project.class))).thenReturn(responseProject());
 
-        Page<ProjectResponseDto> result =
-                projectServiceImpl.getAll(PageRequest.of(0, 10));
+        Page<ProjectResponseDto> result = projectServiceImpl.getAll(PageRequest.of(0, 10));
 
         assertEquals(1, result.getTotalElements());
     }
@@ -148,8 +129,7 @@ public class ProjectServiceTest {
 
         Project existingProject = createProject();
 
-        when(projectRepository.findById(1L))
-                .thenReturn(Optional.of(existingProject));
+        when(projectRepository.findById(1L)).thenReturn(Optional.of(existingProject));
         when(projectRepository.save(any(Project.class))).thenReturn(existingProject);
         when(projectMapper.toDto(any(Project.class))).thenReturn(responseProject());
 

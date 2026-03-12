@@ -4,12 +4,14 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.Properties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.domain.entity.Task;
 import org.example.domain.entity.User;
+import org.example.domain.entity.status.TaskPriority;
 import org.example.domain.entity.status.TaskStatus;
 import org.example.domain.exception.UserNotFoundException;
 import org.example.infrastructure.configuration.properties.EmailProperties;
@@ -153,12 +155,13 @@ public class EmailNotificationService {
     private TaskNotificationContent buildNotificationContent(Task task, User senderUser) {
 
         return new TaskNotificationContent(
-                task.getProject().getName(),
-                task.getTitle(),
-                task.getDescription() != null ? task.getDescription() : "N/A",
-                task.getDueDate(),
-                task.getTaskPriority().name(),
-                getStatusHtml(task.getTaskStatus()),
+                task.getProject() != null
+                        ? normalizeField(task.getProject().getName()) : "N/A",
+                task.getTitle() != null ? normalizeField(task.getTitle()) : "N/A",
+                task.getDescription() != null ? normalizeField(task.getDescription()) : "N/A",
+                task.getDueDate() != null ? task.getDueDate() : LocalDate.now(),
+                formatPriorityForEmail(task.getTaskPriority()),
+                formatStatusForEmail(task.getTaskStatus()),
                 senderUser.getEmail()
         );
     }
@@ -175,8 +178,7 @@ public class EmailNotificationService {
                 🚨 <b>Priority:</b> %s<br>
                 📊 <b>Status:</b> %s<br>
                 👤 <b>Assigned by:</b> %s
-                """
-                .formatted(
+                """.formatted(
                         content.projectName(),
                         content.title(),
                         content.description(),
@@ -187,12 +189,39 @@ public class EmailNotificationService {
                 );
     }
 
-    private String getStatusHtml(TaskStatus status) {
+    private String normalizeField(String value) {
+
+        if (value == null || value.isBlank() || "string".equals(value)) {
+            return "N/A";
+        }
+        return value;
+    }
+
+    private String formatPriorityForEmail(TaskPriority priority) {
+
+        if (priority == null || priority == TaskPriority.NO_SPECIFIED) {
+            return "N/A";
+        }
+
+        return switch (priority) {
+            case HIGH -> "<span style=\"color:red\">HIGH</span>";
+            case MEDIUM -> "<span style=\"color:orange\">MEDIUM</span>";
+            case LOW -> "<span style=\"color:green\">LOW</span>";
+            default -> "N/A";
+        };
+    }
+
+    private String formatStatusForEmail(TaskStatus status) {
+
+        if (status == null || status == TaskStatus.NO_SPECIFIED) {
+            return "N/A";
+        }
 
         return switch (status) {
-            case NOT_STARTED -> "<span style='color:red; font-weight:bold;'>NOT_STARTED</span>";
-            case IN_PROGRESS -> "<span style='color:orange; font-weight:bold;'>IN_PROGRESS</span>";
-            case COMPLETED -> "<span style='color:green; font-weight:bold;'>COMPLETED</span>";
+            case NOT_STARTED -> "<span style=\"color:red\">NOT_STARTED</span>";
+            case IN_PROGRESS -> "<span style=\"color:orange\">IN_PROGRESS</span>";
+            case COMPLETED -> "<span style=\"color:green\">COMPLETED</span>";
+            default -> "N/A";
         };
     }
 }

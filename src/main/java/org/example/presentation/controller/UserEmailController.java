@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.application.service.TaskService;
-import org.example.infrastructure.integration.UserEmailCredentialsService;
+import org.example.infrastructure.integration.UserCredentialsExternalService;
 import org.example.presentation.dto.request.EmailCredentialsRequestDto;
 import org.example.presentation.dto.request.EmailRequestDto;
 import org.example.presentation.dto.response.EmailResponseDto;
@@ -25,12 +25,12 @@ import org.springframework.web.bind.annotation.RestController;
         description = "Manage and sending notifications in Email")
 public class UserEmailController {
 
-    private final UserEmailCredentialsService emailCredentialsService;
+    private final UserCredentialsExternalService emailCredentialsService;
 
     private final TaskService taskService;
 
     @PostMapping("/{id}/email-credentials")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("#id == authentication.principal.id")
     @Operation(
             summary = "Set email credentials for notifications",

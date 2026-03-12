@@ -400,7 +400,7 @@ The video demonstrates:
     - Google Calendar synchronization
     - Dropbox file upload
 
-👉 https://www.loom.com/share/
+👉 https://drive.google.com/file/d/1ePOL9sHcYB-oYl8B11FDmNZyemhO3a7x/view?usp=sharing
 
 ***
 

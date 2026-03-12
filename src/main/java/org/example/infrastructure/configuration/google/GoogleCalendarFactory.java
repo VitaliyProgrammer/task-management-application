@@ -20,7 +20,6 @@ public class GoogleCalendarFactory {
 
     private static final GsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
     private static final String APPLICATION_NAME = "Task Management Application";
-
     private final GoogleCredentialsProvider credentialsProvider;
 
     private final UserRepository userRepository;
@@ -38,7 +37,6 @@ public class GoogleCalendarFactory {
                     transport, JSON_FACTORY, new HttpCredentialsAdapter(googleCredentials))
                     .setApplicationName(APPLICATION_NAME)
                     .build();
-
 
         } catch (Exception exception) {
             throw new IllegalArgumentException(

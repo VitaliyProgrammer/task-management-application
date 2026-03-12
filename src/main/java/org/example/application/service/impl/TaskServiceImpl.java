@@ -11,6 +11,7 @@ import org.example.domain.entity.Label;
 import org.example.domain.entity.Project;
 import org.example.domain.entity.Task;
 import org.example.domain.entity.User;
+import org.example.domain.entity.status.TaskPriority;
 import org.example.domain.entity.status.TaskStatus;
 import org.example.domain.event.SendEmailTaskEvent;
 import org.example.domain.event.SendGoogleCalendarTaskEvent;
@@ -30,7 +31,6 @@ import org.example.presentation.dto.request.GoogleCalendarRequestDto;
 import org.example.presentation.dto.request.TaskCreateRequestDto;
 import org.example.presentation.dto.request.TaskSearchParameterDto;
 import org.example.presentation.dto.request.TaskUpdateRequestDto;
-import org.example.presentation.dto.request.TelegramRequestDto;
 import org.example.presentation.dto.response.EmailResponseDto;
 import org.example.presentation.dto.response.GoogleCalendarResponseDto;
 import org.example.presentation.dto.response.TaskResponseDto;
@@ -88,11 +88,17 @@ public class TaskServiceImpl implements TaskService {
             task.setLabels(labels);
         }
 
+        if (request.taskPriority() != null) {
+            task.setTaskPriority(request.taskPriority());
+        } else {
+            task.setTaskPriority(TaskPriority.NO_SPECIFIED);
+        }
+
         if (request.taskStatus() != null) {
 
             task.setTaskStatus(request.taskStatus());
         } else {
-            task.setTaskStatus(TaskStatus.NOT_STARTED);
+            task.setTaskStatus(TaskStatus.NO_SPECIFIED);
         }
 
         Task savedTask = taskRepository.save(task);
@@ -218,7 +224,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(readOnly = true)
-    public TelegramResponseDto sendNotificationToTelegram(Long taskId, TelegramRequestDto request) {
+    public TelegramResponseDto sendNotificationToTelegram(Long taskId) {
 
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new TaskNotFoundException("Task no found!"));
@@ -227,13 +233,19 @@ public class TaskServiceImpl implements TaskService {
             task.getProject().getName();
         }
 
+        User assignee = task.getAssignee() != null ? task.getAssignee() : null;
+
+        if (assignee == null || assignee.getTelegramChatId() == null) {
+            throw new IllegalArgumentException("This assignee has no Telegram chatId!");
+        }
+
         User senderUser = currentUserProvider.getAuthenticatedUser();
 
         applicationEventPublisher.publishEvent(new SendTelegramTaskEvent(task, senderUser));
 
         Instant shippingTime = Instant.now().truncatedTo(ChronoUnit.SECONDS);
 
-        return new TelegramResponseDto(task.getId(), request.telegramChatId(), shippingTime);
+        return new TelegramResponseDto(task.getId(), assignee.getTelegramChatId(), shippingTime);
     }
 
     @Override

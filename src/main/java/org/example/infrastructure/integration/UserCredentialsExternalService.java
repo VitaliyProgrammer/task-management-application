@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class UserEmailCredentialsService {
+public class UserCredentialsExternalService {
 
     private final UserRepository userRepository;
     private final EmailCredentialsCryptoService credentialsCryptoService;
@@ -35,6 +35,10 @@ public class UserEmailCredentialsService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found with id: "
                         + userId));
+
+        if (telegramChatId <= 0) {
+            throw new IllegalArgumentException("Invalid telegram chatId");
+        }
 
         user.setTelegramChatId(telegramChatId);
         userRepository.save(user);

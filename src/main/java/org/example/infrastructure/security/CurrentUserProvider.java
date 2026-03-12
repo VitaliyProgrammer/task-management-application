@@ -12,12 +12,12 @@ public class CurrentUserProvider {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authentication == null ||
-                !(authentication.getPrincipal() instanceof UserSecurity userSecurity)) {
+        if (authentication == null
+                || !(authentication.getPrincipal() instanceof UserSecurity userSecurity)) {
 
             throw new IllegalStateException("No authenticated user found!");
         }
 
-        return  userSecurity.getUser();
+        return userSecurity.getUser();
     }
 }

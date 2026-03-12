@@ -4,11 +4,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.application.service.TaskService;
 import org.example.presentation.dto.request.TaskCreateRequestDto;
 import org.example.presentation.dto.request.TaskSearchParameterDto;
 import org.example.presentation.dto.request.TaskUpdateRequestDto;
 import org.example.presentation.dto.response.TaskResponseDto;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Slf4j
 @RequestMapping("/tasks")
 @RequiredArgsConstructor
 @Tag(
@@ -40,7 +43,7 @@ public class TaskController {
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @Operation(summary = "Create a new task", description = "Create a new task within a project")
     public TaskResponseDto create(@RequestBody TaskCreateRequestDto request) {
-        System.out.println("Task is created! ");
+        log.info("Received create task request: {}", request);
         return taskService.create(request);
     }
 
@@ -54,7 +57,8 @@ public class TaskController {
                             + "title, status, priority, assignee, project, "
                             + "creation date, due date and attachment presence. "
                             + "API supports pagination.")
-    public Page<TaskResponseDto> search(TaskSearchParameterDto searchParameter, Pageable pageable) {
+    public Page<TaskResponseDto> search(@ParameterObject TaskSearchParameterDto searchParameter,
+                                        @ParameterObject Pageable pageable) {
         return taskService.search(searchParameter, pageable);
     }
 

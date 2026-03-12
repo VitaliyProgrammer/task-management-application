@@ -12,7 +12,6 @@ import org.example.presentation.dto.response.TaskResponseDto;
 import org.example.presentation.dto.response.TelegramResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.transaction.annotation.Transactional;
 
 public interface TaskService {
 
@@ -30,7 +29,7 @@ public interface TaskService {
 
     EmailResponseDto sendNotificationToEmail(Long taskId, EmailRequestDto request);
 
-    TelegramResponseDto sendNotificationToTelegram(Long taskId, TelegramRequestDto request);
+    TelegramResponseDto sendNotificationToTelegram(Long taskId);
 
     void delete(Long id);
 }

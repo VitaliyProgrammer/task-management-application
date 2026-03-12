@@ -39,7 +39,8 @@ public class GoogleCalendarNotificationService {
     private final UserRepository userRepository;
 
     @Async("googleCalendarExecutor")
-    public void createTaskEvent(Task task, User senderUser, LocalDate startDate, LocalDate endDate) {
+    public void createTaskEvent(Task task, User senderUser,
+                                LocalDate startDate, LocalDate endDate) {
 
         log.info("GoogleCalendar: start creating event for task id={}", task);
 
@@ -47,7 +48,6 @@ public class GoogleCalendarNotificationService {
             log.debug("Google Calendar: notifications are disabled!");
             return;
         }
-
 
         if (!shouldCreateCalendarEvent(task)) {
             log.debug("Google Calendar event skipped for task id={}", task);
@@ -92,7 +92,6 @@ public class GoogleCalendarNotificationService {
                 .setDescription(description)
                 .setStart(new EventDateTime().setDateTime(start))
                 .setEnd(new EventDateTime().setDateTime(end))
-                .setColorId(mapPriorityToColor(task.getTaskPriority()))
                 .setExtendedProperties(new Event.ExtendedProperties().setPrivate(properties));
     }
 
@@ -156,16 +155,24 @@ public class GoogleCalendarNotificationService {
     private TaskNotificationContent buildNotificationContent(Task task, User senderUser) {
 
         return new TaskNotificationContent(
-                task.getProject().getName(),
-                task.getTitle(),
-                task.getDescription() != null ? task.getDescription() : "N/A",
-                task.getDueDate(),
-                mapPriorityToColor(task.getTaskPriority()),
-                mapStatusToColor(task.getTaskStatus()),
+                task.getProject() != null
+                        ? normalizeField(task.getProject().getName()) : "N/A",
+                task.getTitle() != null ? normalizeField(task.getTitle()) : "N/A",
+                task.getDescription() != null ? normalizeField(task.getDescription()) : "N/A",
+                task.getDueDate() != null ? task.getDueDate() : LocalDate.now(),
+                formatPriorityLabel(task.getTaskPriority()),
+                formatStatusForLabel(task.getTaskStatus()),
                 senderUser.getEmail()
         );
     }
 
+    private String normalizeField(String value) {
+
+        if (value == null || value.isBlank() || "string".equals(value)) {
+            return "N/A";
+        }
+        return value;
+    }
 
     private String buildDescription(TaskNotificationContent content) {
 
@@ -190,25 +197,19 @@ public class GoogleCalendarNotificationService {
         );
     }
 
-    private String mapPriorityToColor(TaskPriority priority) {
+    private String formatPriorityLabel(TaskPriority priority) {
 
-        if (priority == null) {
-            return "1";
+        if (priority == null || priority == TaskPriority.NO_SPECIFIED) {
+            return "N/A";
         }
-
-        return switch (priority) {
-            case HIGH -> "11";
-            case MEDIUM -> "5";
-            case LOW -> "2";
-        };
+        return priority.name();
     }
 
-    private String mapStatusToColor(TaskStatus status) {
+    private String formatStatusForLabel(TaskStatus status) {
 
-        return switch (status) {
-            case NOT_STARTED -> "🔴 NOT_STARTED";
-            case IN_PROGRESS -> "🟠 IN_PROGRESS";
-            case COMPLETED -> "🟢 COMPLETED";
-        };
+        if (status == null || status == TaskStatus.NO_SPECIFIED) {
+            return "N/A";
+        }
+        return status.name();
     }
 }

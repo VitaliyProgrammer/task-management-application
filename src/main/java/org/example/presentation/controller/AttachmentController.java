@@ -23,22 +23,22 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/attachments")
+@RequestMapping("/dropbox/")
 @RequiredArgsConstructor
 @Tag(
-        name = "Attachments",
+        name = "DropBox API",
         description = "API for managing file attachments linked to tasks via DropBox")
 public class AttachmentController {
 
     private final AttachmentService attachmentService;
     private final DropBoxService dropBoxService;
 
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @Operation(
-            summary = "Upload attachment to task",
-            description = "Uploads a file and attaches it to a specific task")
+            summary = "Upload attachment to DropBox",
+            description = "Uploads files and attaches it to a specific task")
     public AttachmentResponseDto uploadFile(
             @RequestParam
             @Parameter(description = "ID of the task to attach the file to", required = true)
@@ -54,7 +54,7 @@ public class AttachmentController {
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @Operation(summary = "Download attachment from DropBox",
-            description = "Downloads a file from DropBox by its path or ID")
+            description = "Downloads files from DropBox by its path or ID")
     public byte[] downloadFile(@RequestParam @Parameter(description = "Path to the file in DropBox",
             required = true) String dropBoxPath) {
 

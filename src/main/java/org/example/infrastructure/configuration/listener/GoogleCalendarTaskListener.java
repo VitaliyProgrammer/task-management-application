@@ -20,6 +20,6 @@ public class GoogleCalendarTaskListener {
         log.debug("Google Calendar listener triggered for task id={}", event.task());
 
         googleCalendarNotificationService.createTaskEvent(event.task(),
-             event.senderUser(), event.startDate(), event.endDate());
+                event.senderUser(), event.startDate(), event.endDate());
     }
 }

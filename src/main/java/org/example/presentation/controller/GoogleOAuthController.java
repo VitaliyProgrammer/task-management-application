@@ -20,8 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/oauth/google-calendar")
 @RequiredArgsConstructor
-@Tag(name = "",
-        description = "")
+@Tag(name = "Google Calendar API",
+        description = "Endpoints for connecting, sending events, "
+                + "and managing Google Calendar integration")
 public class GoogleOAuthController {
 
     private final GoogleOAuthService googleOAuthService;

@@ -1,5 +1,6 @@
 package org.example.infrastructure.integration;
 
+import java.time.LocalDate;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.Semaphore;
@@ -7,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.domain.entity.Task;
 import org.example.domain.entity.User;
+import org.example.domain.entity.status.TaskPriority;
 import org.example.domain.entity.status.TaskStatus;
 import org.example.domain.exception.UserNotFoundException;
 import org.example.infrastructure.configuration.properties.TelegramProperties;
@@ -39,7 +41,7 @@ public class TelegramNotificationService {
             return;
         }
 
-        Optional<User> assignee = getAssigneeWithEmailCredentials(task);
+        Optional<User> assignee = getAssigneeWithTelegramCredentials(task);
 
         if (assignee.isEmpty()) {
             return;
@@ -58,9 +60,11 @@ public class TelegramNotificationService {
         String url = "https://api.telegram.org/bot" + telegramProperties.getBotToken()
                 + "/sendMessage";
 
+        TaskNotificationContent content = buildNotificationContent(task, senderUser);
+
         Map<String, Object> payload = Map.of(
                 "chat_id", chatId,
-                "text", buildTelegramTextBody(task, senderUser),
+                "text", buildTelegramTextBody(content),
                 "parse_mode", "HTML"
         );
 
@@ -83,7 +87,7 @@ public class TelegramNotificationService {
         restTemplate.postForObject(url, payload, String.class);
     }
 
-    private Optional<User> getAssigneeWithEmailCredentials(Task task) {
+    private Optional<User> getAssigneeWithTelegramCredentials(Task task) {
 
         Long assigneeId = task.getAssignee() != null ? task.getAssignee().getId() : null;
 
@@ -95,28 +99,33 @@ public class TelegramNotificationService {
         User assignee = userRepository.findById(assigneeId)
                 .orElseThrow(() -> new UserNotFoundException("Assignee not found!"));
 
-        if (assignee == null || assignee.getTelegramChatId() == null) {
+        if (assignee.getTelegramChatId() == null) {
 
-            log.warn("Telegram: no chatId for task {}", task.getId());
+            log.warn("Telegram: assignee {} has no chatId for task {}", assigneeId, task.getId());
             return Optional.empty();
         }
 
         return Optional.of(assignee);
     }
 
-    private String getStatusText(TaskStatus status) {
+    private TaskNotificationContent buildNotificationContent(Task task, User senderUser) {
 
-        return switch (status) {
-            case NOT_STARTED -> "🔴 NOT_STARTED";
-            case IN_PROGRESS -> "🟠 IN_PROGRESS";
-            case COMPLETED -> "🟢 COMPLETED";
-        };
+        return new TaskNotificationContent(
+                task.getProject() != null
+                        ? normalizeField(task.getProject().getName()) : "N/A",
+                task.getTitle() != null ? normalizeField(task.getTitle()) : "N/A",
+                task.getDescription() != null ? normalizeField(task.getDescription()) : "N/A",
+                task.getDueDate() != null ? task.getDueDate() : LocalDate.now(),
+                formatPriorityForTelegram(task.getTaskPriority()),
+                formatStatusForTelegram(task.getTaskStatus()),
+                senderUser.getEmail()
+        );
     }
 
-    private String buildTelegramTextBody(Task task, User senderUser) {
+    private String buildTelegramTextBody(TaskNotificationContent content) {
 
         return """
-                <b>📌You have a new task assigned!</b>
+                <b>📌 You have a new task assigned!</b>
 
                 <b>🏗️ Project:</b> %s
                 <b>📁 Title:</b> %s
@@ -127,13 +136,48 @@ public class TelegramNotificationService {
                 <b>👤 Assigned by:</b> %s
                 """
                 .formatted(
-                        task.getProject() != null ? task.getProject().getName() : "N/A",
-                        task.getTitle(),
-                        task.getDescription(),
-                        task.getDueDate(),
-                        task.getTaskPriority(),
-                        getStatusText(task.getTaskStatus()),
-                        senderUser.getEmail()
+                        content.projectName(),
+                        content.title(),
+                        content.description(),
+                        content.dueDate(),
+                        content.priority(),
+                        content.status(),
+                        content.assignedByEmail()
                 );
+    }
+
+    private String normalizeField(String value) {
+
+        if (value == null || value.isBlank() || "string".equals(value)) {
+            return "N/A";
+        }
+        return value;
+    }
+
+    private String formatPriorityForTelegram(TaskPriority priority) {
+
+        if (priority == null || priority == TaskPriority.NO_SPECIFIED) {
+            return "N/A";
+        }
+
+        return switch (priority) {
+            case HIGH -> "🔴 HIGH";
+            case MEDIUM -> "🟠 MEDIUM";
+            case LOW -> "🟢 LOW";
+            default -> "N/A";
+        };
+    }
+
+    private String formatStatusForTelegram(TaskStatus status) {
+        if (status == null || status == TaskStatus.NO_SPECIFIED) {
+            return "N/A";
+        }
+
+        return switch (status) {
+            case NOT_STARTED -> "⚪ NOT_STARTED";
+            case IN_PROGRESS -> "🟠 IN_PROGRESS";
+            case COMPLETED -> "🟢 COMPLETED";
+            default -> "N/A";
+        };
     }
 }

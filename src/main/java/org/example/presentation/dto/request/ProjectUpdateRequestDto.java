@@ -10,5 +10,7 @@ public record ProjectUpdateRequestDto(
         String description,
         @NotNull(message = "{project.startDate.notNull}")
         LocalDate startDate,
-        LocalDate endDate) {
+        @NotNull(message = "{project.endDate.notNull}")
+        LocalDate endDate
+) {
 }

@@ -7,11 +7,12 @@ import org.example.domain.entity.Label;
 import org.example.domain.exception.LabelAlreadyExistsException;
 import org.example.domain.exception.LabelNotFoundException;
 import org.example.infrastructure.repository.LabelRepository;
-import org.example.presentation.dto.request.LabelCreateRequestDto;
+import org.example.presentation.dto.request.LabelRequestDto;
 import org.example.presentation.dto.response.LabelResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class LabelServiceImpl implements LabelService {
     private final LabelMapper labelMapper;
 
     @Override
-    public LabelResponseDto create(LabelCreateRequestDto request) {
+    public LabelResponseDto create(LabelRequestDto request) {
 
         if (labelRepository.existsByName(request.name())) {
             throw new LabelAlreadyExistsException("Label with this name already exists!");
@@ -34,18 +35,15 @@ public class LabelServiceImpl implements LabelService {
     }
 
     @Override
-    public LabelResponseDto update(Long id, LabelCreateRequestDto request) {
+    @Transactional
+    public LabelResponseDto update(Long id, LabelRequestDto request) {
 
         Label label = labelRepository.findById(id)
-                        .orElseThrow(() -> new LabelNotFoundException("Label not found!"));
+                .orElseThrow(() -> new LabelNotFoundException("Label not found!"));
 
-        label.setName(request.name());
-        label.setColor(request.color());
-        label.setDescription(request.description());
+        labelMapper.updateLabelFromDto(request, label);
 
-        Label savedLabel = labelRepository.save(label);
-
-        return labelMapper.toDto(savedLabel);
+        return labelMapper.toDto(label);
     }
 
     @Override

@@ -1,4 +1,10 @@
 package org.example.presentation.dto.request;
 
-public record EmailRequestDto(String recipientEmail) {
+import jakarta.validation.constraints.NotBlank;
+
+public record EmailRequestDto(
+        @NotBlank(message = "{email.notBlank}")
+        @NotBlank(message = "{email.invalid}")
+        String recipientEmail
+) {
 }

@@ -7,5 +7,6 @@ public record UserPatchProfileRequestDto(
         String lastName,
         String emailUsername,
         String emailPassword,
-        Long telegramChatId) {
+        Long telegramChatId
+) {
 }

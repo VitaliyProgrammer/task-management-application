@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.application.service.LabelService;
-import org.example.presentation.dto.request.LabelCreateRequestDto;
+import org.example.presentation.dto.request.LabelRequestDto;
 import org.example.presentation.dto.response.LabelResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,7 +37,7 @@ public class LabelController {
             description =
                     "Creates a new label that can be assigned to tasks. "
                             + "Label names must be unique.")
-    public LabelResponseDto create(@RequestBody @Valid LabelCreateRequestDto request) {
+    public LabelResponseDto create(@RequestBody @Valid LabelRequestDto request) {
         return labelService.create(request);
     }
 
@@ -58,7 +58,7 @@ public class LabelController {
             summary = "Update label",
             description = "Updates the name or properties of an existing label.")
     public LabelResponseDto update(
-            @PathVariable Long id, @RequestBody @Valid LabelCreateRequestDto request) {
+            @PathVariable Long id, @RequestBody @Valid LabelRequestDto request) {
         return labelService.update(id, request);
     }
 

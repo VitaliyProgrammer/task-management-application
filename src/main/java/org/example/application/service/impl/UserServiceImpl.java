@@ -53,8 +53,8 @@ public class UserServiceImpl implements UserService {
         }
 
         Role userRole = roleRepository.findByRoleName(RoleName.USER)
-                        .orElseThrow(() -> new UserRoleNotFoundException(
-                                "The USER role not found!  "));
+                .orElseThrow(() -> new UserRoleNotFoundException(
+                        "The USER role not found!  "));
 
         User user = userMapper.toModel(request);
 
@@ -71,16 +71,16 @@ public class UserServiceImpl implements UserService {
     public UserLoginResponseDto login(UserLoginRequestDto request) {
 
         User user = userRepository.findByEmail(request.email())
-                        .orElseThrow(() -> new AuthenticationException(
-                                "Invalid email or password!"));
+                .orElseThrow(() -> new AuthenticationException(
+                        "Invalid email or password!"));
 
         if (!passwordEncoder.matches(request.password(), user.getPassword())) {
             throw new AuthenticationException("Invalid email or password!");
         }
 
         String token = jwtUtil.generateToken(
-                        user.getEmail(),
-                        user.getRoles().stream().map(role -> role.getRoleName().name()).toList());
+                user.getEmail(),
+                user.getRoles().stream().map(role -> role.getRoleName().name()).toList());
 
         return new UserLoginResponseDto(token);
     }
@@ -98,8 +98,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserRegistrationResponseDto findById(Long id) {
         User user = userRepository.findById(id)
-                        .orElseThrow(() -> new UserNotFoundException("User not found with id!:"
-                                + id));
+                .orElseThrow(() -> new UserNotFoundException("User not found with id!:"
+                        + id));
 
         return userMapper.toDto(user);
     }
@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService {
     public UserProfileResponseDto getUserProfile(String email) {
 
         User user = userRepository.findByEmail(email)
-                        .orElseThrow(() -> new UserNotFoundException("User not found! " + email));
+                .orElseThrow(() -> new UserNotFoundException("User not found! " + email));
 
         return userMapper.toProfileDto(user);
     }
@@ -130,14 +130,11 @@ public class UserServiceImpl implements UserService {
                                                     UserPutProfileRequestDto request) {
 
         User user = userRepository.findByEmail(email)
-                        .orElseThrow(() -> new UserNotFoundException("User not found!: " + email));
+                .orElseThrow(() -> new UserNotFoundException("User not found!: " + email));
 
-        user.setFirstName(request.firstName());
-        user.setLastName(request.lastName());
+        userMapper.updateUserFromDto(request, user);
 
-        User savedUser = userRepository.save(user);
-
-        return userMapper.toProfileDto(savedUser);
+        return userMapper.toProfileDto(user);
     }
 
     @Override
@@ -146,7 +143,7 @@ public class UserServiceImpl implements UserService {
                                                    UserPatchProfileRequestDto request) {
 
         User user = userRepository.findByEmail(email)
-                        .orElseThrow(() -> new UserNotFoundException("User not found!: " + email));
+                .orElseThrow(() -> new UserNotFoundException("User not found!: " + email));
 
         if (request.password() != null && !request.password().isBlank()) {
             String encodedPassword = passwordEncoder.encode(request.password());
@@ -188,8 +185,8 @@ public class UserServiceImpl implements UserService {
                         .orElseThrow(() -> new UserNotFoundException("User not found!" + userId));
 
         Role userRole = roleRepository.findByRoleName(roleName)
-                        .orElseThrow(() -> new UserRoleNotFoundException("Role " + roleName
-                                + " not found!"));
+                .orElseThrow(() -> new UserRoleNotFoundException("Role " + roleName
+                        + " not found!"));
 
         user.getRoles().clear();
         user.getRoles().add(userRole);
@@ -204,8 +201,8 @@ public class UserServiceImpl implements UserService {
             throws UsernameNotFoundException {
 
         User user = userRepository.findById(userId)
-                        .orElseThrow(() -> new UsernameNotFoundException("User not found!: "
-                                + userId));
+                .orElseThrow(() -> new UsernameNotFoundException("User not found!: "
+                        + userId));
 
         user.setEmailUsername(emailUsername);
         user.setEmailPassword(cryptoService.encrypt(emailPassword));

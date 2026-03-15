@@ -21,6 +21,7 @@ public record TaskCreateRequestDto(
         LocalDate dueDate,
         @NotNull(message = "{task.projectId.notNull}")
         Long projectId,
+        @NotNull(message = "{task.assigneeId.notNull}")
         Long assigneeId,
         Set<Long> labelIds) {
 }

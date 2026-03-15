@@ -65,91 +65,106 @@ public class TaskServiceImpl implements TaskService {
 
         Task task = taskMapper.toModel(request);
 
-        Project project = projectRepository.findById(request.projectId())
-                .orElseThrow(() -> new ProjectNotFoundException("Project not found!"));
-
-        task.setProject(project);
-
-        if (request.assigneeId() != null) {
-            User assignee = userRepository.findById(request.assigneeId())
-                    .orElseThrow(() -> new UserNotFoundException("User not found!"));
-
-            task.setAssignee(assignee);
-        }
-
-        if (request.labelIds() != null && !request.labelIds().isEmpty()) {
-
-            Set<Label> labels = getLabelsByIds(request.labelIds());
-
-            if (labels.size() != request.labelIds().size()) {
-                throw new LabelNotFoundException("Some labels not found!");
-            }
-
-            task.setLabels(labels);
-        }
-
-        if (request.taskPriority() != null) {
-            task.setTaskPriority(request.taskPriority());
-        } else {
-            task.setTaskPriority(TaskPriority.NO_SPECIFIED);
-        }
-
-        if (request.taskStatus() != null) {
-
-            task.setTaskStatus(request.taskStatus());
-        } else {
-            task.setTaskStatus(TaskStatus.NO_SPECIFIED);
-        }
+        assignProject(task, request.projectId());
+        assignAssignee(task, request.assigneeId());
+        assignLabel(task, request.labelIds());
+        assignDefaultStatus(task);
 
         Task savedTask = taskRepository.save(task);
 
         return taskMapper.toDto(savedTask);
     }
 
+    private void assignProject(Task task, Long projectId) {
+
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new ProjectNotFoundException("Project not found!"));
+
+        task.setProject(project);
+    }
+
+    private void assignAssignee(Task task, Long assigneeId) {
+
+        if (assigneeId == null) {
+            return;
+        }
+        User assignee = userRepository.findById(assigneeId)
+                .orElseThrow(() -> new UserNotFoundException("User not found!"));
+
+        task.setAssignee(assignee);
+    }
+
+    private void assignLabel(Task task, Set<Long> labelIds) {
+
+        if (labelIds == null || labelIds.isEmpty()) {
+            return;
+        }
+
+        Set<Label> labels = getLabelsByIds(labelIds);
+
+        if (labels.size() != labelIds.size()) {
+            throw new LabelNotFoundException("Some labels not found!");
+        }
+
+        task.getLabels().clear();
+        task.getLabels().addAll(labels);
+    }
+
+    private void assignDefaultStatus(Task task) {
+
+        if (task.getTaskPriority() == null) {
+            task.setTaskPriority(TaskPriority.NO_SPECIFIED);
+        }
+
+        if (task.getTaskStatus() == null) {
+            task.setTaskStatus(TaskStatus.NO_SPECIFIED);
+        }
+    }
+
     @Override
+    @Transactional
     public TaskResponseDto update(Long id, TaskUpdateRequestDto request) {
 
-        Task task = taskRepository.findById(id)
+        Task task = getTaskOrThrowException(id);
+
+        taskMapper.updateTaskFromDto(request, task);
+
+        updateAssignee(task, request.assigneeId());
+        updateLabel(task, request.labelIds());
+
+        return taskMapper.toDto(task);
+    }
+
+    private Task getTaskOrThrowException(Long id) {
+
+        return taskRepository.findById(id)
                 .orElseThrow(() -> new TaskNotFoundException("Task not found!"));
+    }
 
-        if (request.name() != null) {
-            task.setTitle(request.name());
-        }
-        if (request.description() != null) {
-            task.setDescription(request.description());
-        }
-        if (request.taskPriority() != null) {
-            task.setTaskPriority(request.taskPriority());
-        }
-        if (request.taskStatus() != null) {
-            task.setTaskStatus(request.taskStatus());
-        }
-        if (request.dueDate() != null) {
-            task.setDueDate(request.dueDate());
-        }
-        if (request.assigneeId() != null) {
-            User assignee =
-                    userRepository.findById(request.assigneeId())
-                            .orElseThrow(() -> new UserNotFoundException("User not found!"));
+    private void updateAssignee(Task task, Long assigneeId) {
 
-            task.setAssignee(assignee);
+        if (assigneeId == null) {
+            return;
+        }
+        User assignee = userRepository.findById(assigneeId)
+                .orElseThrow(() -> new UserNotFoundException("User not found!"));
+
+        task.setAssignee(assignee);
+    }
+
+    private void updateLabel(Task task, Set<Long> labelIds) {
+
+        if (labelIds == null || labelIds.isEmpty()) {
+            return;
         }
 
-        if (request.labelIds() != null) {
+        Set<Label> labels = getLabelsByIds(labelIds);
 
-            Set<Label> labels = getLabelsByIds(request.labelIds());
-
-            if (labels.size() != request.labelIds().size()) {
-                throw new LabelNotFoundException("Some labels not found!");
-            }
-
-            task.getLabels().clear();
-            task.getLabels().addAll(labels);
+        if (labels.size() != labelIds.size()) {
+            throw new LabelNotFoundException("Some labels not found!");
         }
 
-        Task savedTask = taskRepository.save(task);
-
-        return taskMapper.toDto(savedTask);
+        task.setLabels(labels);
     }
 
     @Override

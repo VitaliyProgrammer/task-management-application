@@ -18,5 +18,6 @@ public record UserRegistrationRequestDto(
         @NotBlank(message = "{firstName.notBlank}")
         String firstName,
         @NotBlank(message = "{lastName.notBlank}")
-        String lastName) {
+        String lastName
+) {
 }

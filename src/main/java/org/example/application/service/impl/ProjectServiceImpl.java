@@ -13,6 +13,7 @@ import org.example.presentation.dto.response.ProjectResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -47,20 +48,16 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    @Transactional
     public ProjectResponseDto update(Long id, ProjectUpdateRequestDto request) {
 
         Project project = projectRepository.findById(id)
                         .orElseThrow(() -> new ProjectNotFoundException(
                                 "Project not found with id: " + id));
 
-        project.setName(request.name());
-        project.setDescription(request.description());
-        project.setStartDate(request.startDate());
-        project.setEndDate(request.endDate());
+        projectMapper.updateProjectFromDto(request, project);
 
-        Project savedProject = projectRepository.save(project);
-
-        return projectMapper.toDto(savedProject);
+        return projectMapper.toDto(project);
     }
 
     @Override

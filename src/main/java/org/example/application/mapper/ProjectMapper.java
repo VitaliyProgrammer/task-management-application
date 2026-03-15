@@ -2,9 +2,11 @@ package org.example.application.mapper;
 
 import org.example.domain.entity.Project;
 import org.example.presentation.dto.request.ProjectCreateRequestDto;
+import org.example.presentation.dto.request.ProjectUpdateRequestDto;
 import org.example.presentation.dto.response.ProjectResponseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface ProjectMapper {
@@ -15,4 +17,6 @@ public interface ProjectMapper {
 
     @Mapping(target = "status", expression = "java(project.getStatus().name())")
     ProjectResponseDto toDto(Project project);
+
+    void updateProjectFromDto(ProjectUpdateRequestDto dto, @MappingTarget Project project);
 }

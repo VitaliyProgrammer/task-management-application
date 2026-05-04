@@ -1,0 +1,13 @@
+/target/
+*.jar
+*.war
+*.iml
+
+.claude/
+.idea/
+.mvn/
+
+.env
+src/main/resources/google/credentials.json
+src/main/resources/dropbox/dropboxSSL.crt
+src/main/resources/application.properties

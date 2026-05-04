@@ -1,0 +1,60 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-users-table
+      author: vitaliy
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+
+              - column:
+                  name: password
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: first_name
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: last_name
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: google_refresh_token
+                  type: VARCHAR(255)
+
+              - column:
+                  name: email_username
+                  type: VARCHAR(255)
+
+              - column:
+                  name: email_password
+                  type: VARCHAR(255)
+
+              - column:
+                  name: telegram_chat_id
+                  type: BIGINT
+
+              - column:
+                  name: telegram_bot_token
+                  type: VARCHAR(255)

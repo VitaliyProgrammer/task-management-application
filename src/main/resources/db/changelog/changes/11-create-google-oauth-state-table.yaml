@@ -1,0 +1,46 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-google-oauth-state-table
+      author: vitaliy
+      changes:
+        - createTable:
+            tableName: google_oauth_state
+            columns:
+              - column:
+                  name: state
+                  type: VARCHAR(64)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: expires_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+
+        - createIndex:
+            tableName: google_oauth_state
+            indexName: index_google_oauth_user
+            columns:
+              - column:
+                  name: user_id
+
+        - addForeignKeyConstraint:
+            baseTableName: google_oauth_state
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_google_oauth_state_user

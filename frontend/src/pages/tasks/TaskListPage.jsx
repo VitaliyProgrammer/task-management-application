@@ -111,7 +111,7 @@ export function TaskListPage() {
         onSubmit={applyFilters}
         aria-label={t('tasks.filters')}
       >
-        <div className={styles.filterGrid}>
+        <div className={styles.filterRow}>
           <label className="field">
             {t('fields.title')}
             <input
@@ -147,7 +147,7 @@ export function TaskListPage() {
             </select>
           </label>
 
-          <div className="field">
+          <div className={`field ${styles.dateField}`}>
             {t('tasks.dueBetween')}
             <span className={styles.dateRange}>
               <input

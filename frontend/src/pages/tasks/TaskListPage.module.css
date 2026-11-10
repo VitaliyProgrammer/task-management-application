@@ -4,23 +4,33 @@
   gap: 16px;
 }
 
-.filterGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+.filterRow {
+  display: flex;
+  flex-wrap: wrap;
   gap: 14px;
 }
 
-/* Two native date inputs need ~280px side by side; when the grid column is
-   narrower, the second one wraps to its own line instead of overflowing. */
+.filterRow > * {
+  flex: 1 1 190px;
+  min-width: 0;
+}
+
+/* The due-date field keeps its natural width: two compact date inputs side by
+   side. The other filters stretch around it. */
+.filterRow > .dateField {
+  flex: 0 0 auto;
+}
+
 .dateRange {
   display: flex;
-  flex-wrap: wrap;
   gap: 6px;
 }
 
+/* 132px is the narrowest width where Chrome still shows a full date
+   (dd.mm.yyyy) next to the calendar icon. */
 .dateRange .input {
-  flex: 1 1 140px;
-  min-width: 0;
+  flex: none;
+  width: 132px;
   padding: 0 10px;
 }
 

@@ -14,6 +14,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.Getter;
@@ -21,6 +22,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.example.domain.entity.status.TaskPriority;
 import org.example.domain.entity.status.TaskStatus;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "tasks")
@@ -48,6 +50,10 @@ public class Task {
     private TaskStatus taskStatus;
 
     private LocalDate dueDate;
+
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id", nullable = false)

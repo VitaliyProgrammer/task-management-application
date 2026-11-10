@@ -5,6 +5,9 @@ import org.example.infrastructure.specification.SpecificationProvider;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+/**
+ * Case-insensitive "title contains" search: "kanban" finds "Kanban board view".
+ */
 @Component
 public class TitleSpecificationProvider implements SpecificationProvider<Task> {
 
@@ -13,7 +16,12 @@ public class TitleSpecificationProvider implements SpecificationProvider<Task> {
         return TaskSpecificationKeys.TITLE;
     }
 
+    @Override
     public Specification<Task> getSpecification(String[] parameters) {
-        return (root, query, criteriaBuilder) -> root.get("title").in((Object[]) parameters);
+
+        String pattern = "%" + parameters[0].trim().toLowerCase() + "%";
+
+        return (root, query, criteriaBuilder) ->
+                criteriaBuilder.like(criteriaBuilder.lower(root.get("title")), pattern);
     }
 }

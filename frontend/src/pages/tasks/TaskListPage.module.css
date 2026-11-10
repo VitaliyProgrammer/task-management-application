@@ -1,0 +1,133 @@
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.filterGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 14px;
+}
+
+.dateRange {
+  display: flex;
+  gap: 6px;
+}
+
+.dateRange .input {
+  min-width: 0;
+  padding: 0 8px;
+}
+
+/* ===== Status / priority chips ===== */
+
+.chipsRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.chipsLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.filterChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color var(--transition),
+    border-color var(--transition);
+}
+
+.filterChip:hover {
+  background: var(--color-hover);
+}
+
+.filterChipOn,
+.filterChipOn:hover {
+  background: var(--pill-bg);
+  border-color: var(--pill-dot);
+  color: var(--pill-ink);
+}
+
+.priorityOn,
+.priorityOn:hover {
+  background: var(--badge-bg);
+  border-color: var(--badge-border);
+  color: var(--badge-ink);
+}
+
+.divider {
+  width: 1px;
+  height: 24px;
+  margin: 0 6px;
+  background: var(--color-border);
+}
+
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-nav);
+}
+
+.checkbox input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-primary);
+}
+
+.spacer {
+  flex: 1;
+}
+
+/* ===== Table ===== */
+
+.titleLink {
+  font-weight: 700;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.titleLink:hover {
+  color: var(--color-primary);
+}
+
+.person {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.nowrap {
+  white-space: nowrap;
+  color: var(--color-text-muted);
+}
+
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 22px;
+  border-top: 1px solid var(--color-hover);
+}

@@ -26,11 +26,19 @@ export function DashboardPage() {
   const stats = useMemo(() => buildStats(tasks), [tasks]);
 
   if (tasksQuery.isPending) {
-    return <main className="page"><LoadingState /></main>;
+    return (
+      <main className="page">
+        <LoadingState />
+      </main>
+    );
   }
 
   if (tasksQuery.isError) {
-    return <main className="page"><ErrorState error={tasksQuery.error} /></main>;
+    return (
+      <main className="page">
+        <ErrorState error={tasksQuery.error} />
+      </main>
+    );
   }
 
   const maxPriorityCount = Math.max(1, ...Object.values(stats.byPriority));
@@ -118,7 +126,9 @@ export function DashboardPage() {
             <Link to="/tasks/list">{t('common.viewAll')}</Link>
           </div>
 
-          {stats.upcoming.length === 0 && <p className="field__hint">{t('dashboard.noDeadlines')}</p>}
+          {stats.upcoming.length === 0 && (
+            <p className="field__hint">{t('dashboard.noDeadlines')}</p>
+          )}
 
           {stats.upcoming.map((task) => (
             <Link key={task.id} to={`/tasks/${task.id}`} className={styles.listRow}>
@@ -126,7 +136,9 @@ export function DashboardPage() {
 
               <span className={styles.listText}>
                 <span className={styles.listTitle}>{task.title}</span>
-                <span className="field__hint">{projects.find((p) => p.id === task.projectId)?.name}</span>
+                <span className="field__hint">
+                  {projects.find((p) => p.id === task.projectId)?.name}
+                </span>
               </span>
 
               <DueLabel date={task.dueDate} language={i18n.language} />
@@ -147,7 +159,8 @@ export function DashboardPage() {
                 <span className={styles.listTitle}>{project.name}</span>
                 <span className="field__hint">
                   {t('tasks.count', { count: stats.tasksPerProject.get(project.id) ?? 0 })}
-                  {project.endDate && ` · ${t('projects.ends')} ${formatDate(project.endDate, i18n.language)}`}
+                  {project.endDate &&
+                    ` · ${t('projects.ends')} ${formatDate(project.endDate, i18n.language)}`}
                 </span>
               </span>
 

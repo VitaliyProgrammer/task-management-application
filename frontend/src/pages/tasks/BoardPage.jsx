@@ -68,11 +68,19 @@ export function BoardPage() {
   };
 
   if (tasksQuery.isPending) {
-    return <main className="page"><LoadingState /></main>;
+    return (
+      <main className="page">
+        <LoadingState />
+      </main>
+    );
   }
 
   if (tasksQuery.isError) {
-    return <main className="page"><ErrorState error={tasksQuery.error} /></main>;
+    return (
+      <main className="page">
+        <ErrorState error={tasksQuery.error} />
+      </main>
+    );
   }
 
   return (
@@ -92,7 +100,11 @@ export function BoardPage() {
           {t('tasks.filters')}
         </Link>
 
-        <button type="button" className="btn btn--primary" onClick={() => setSearchParams({ new: '1' })}>
+        <button
+          type="button"
+          className="btn btn--primary"
+          onClick={() => setSearchParams({ new: '1' })}
+        >
           + {t('tasks.newTask')}
         </button>
       </TasksHeader>
@@ -131,7 +143,9 @@ export function BoardPage() {
               />
             ))}
 
-            {column.tasks.length === 0 && <p className={styles.emptyColumn}>{t('tasks.emptyColumn')}</p>}
+            {column.tasks.length === 0 && (
+              <p className={styles.emptyColumn}>{t('tasks.emptyColumn')}</p>
+            )}
           </div>
         ))}
       </section>
@@ -167,7 +181,8 @@ function TaskCard({ task, assignee, projectName, isDragging, onDragStart, onDrag
       <span className={styles.cardMeta}>
         <span>
           {projectName}
-          {task.dueDate && ` · ${t('tasks.due')} ${formatDate(task.dueDate, i18n.language, { withYear: false })}`}
+          {task.dueDate &&
+            ` · ${t('tasks.due')} ${formatDate(task.dueDate, i18n.language, { withYear: false })}`}
         </span>
 
         {assignee && <Avatar user={assignee} size={28} />}

@@ -16,8 +16,10 @@ function initialForm(task) {
     description: task?.description ?? '',
     projectId: task?.projectId ?? '',
     assigneeId: task?.assigneeId ?? '',
-    taskStatus: task?.taskStatus && task.taskStatus !== 'NO_SPECIFIED' ? task.taskStatus : 'NOT_STARTED',
-    taskPriority: task?.taskPriority && task.taskPriority !== 'NO_SPECIFIED' ? task.taskPriority : 'MEDIUM',
+    taskStatus:
+      task?.taskStatus && task.taskStatus !== 'NO_SPECIFIED' ? task.taskStatus : 'NOT_STARTED',
+    taskPriority:
+      task?.taskPriority && task.taskPriority !== 'NO_SPECIFIED' ? task.taskPriority : 'MEDIUM',
     dueDate: task?.dueDate ?? '',
     labelIds: task?.labels?.map((label) => label.id) ?? [],
   };
@@ -91,7 +93,12 @@ export function TaskFormModal({ task, defaultProjectId, onClose, onSaved }) {
             {t('common.cancel')}
           </button>
 
-          <button type="submit" form="task-form" className="btn btn--primary" disabled={saveMutation.isPending}>
+          <button
+            type="submit"
+            form="task-form"
+            className="btn btn--primary"
+            disabled={saveMutation.isPending}
+          >
             {isEdit ? t('common.save') : t('tasks.create')}
           </button>
         </>
@@ -102,12 +109,25 @@ export function TaskFormModal({ task, defaultProjectId, onClose, onSaved }) {
 
         <label className="field">
           {t('fields.title')}
-          <input className="input" name="title" value={form.title} onChange={updateField} required autoFocus />
+          <input
+            className="input"
+            name="title"
+            value={form.title}
+            onChange={updateField}
+            required
+            autoFocus
+          />
         </label>
 
         <label className="field">
           {t('fields.description')}
-          <textarea className="input" name="description" rows={3} value={form.description} onChange={updateField} />
+          <textarea
+            className="input"
+            name="description"
+            rows={3}
+            value={form.description}
+            onChange={updateField}
+          />
         </label>
 
         <div className="form-grid">
@@ -132,7 +152,12 @@ export function TaskFormModal({ task, defaultProjectId, onClose, onSaved }) {
 
           <label className="field">
             {t('fields.assignee')}
-            <select className="input" name="assigneeId" value={form.assigneeId} onChange={updateField}>
+            <select
+              className="input"
+              name="assigneeId"
+              value={form.assigneeId}
+              onChange={updateField}
+            >
               <option value="">{t('tasks.unassigned')}</option>
               {users.map((user) => (
                 <option key={user.id} value={user.id}>
@@ -144,7 +169,12 @@ export function TaskFormModal({ task, defaultProjectId, onClose, onSaved }) {
 
           <label className="field">
             {t('fields.status')}
-            <select className="input" name="taskStatus" value={form.taskStatus} onChange={updateField}>
+            <select
+              className="input"
+              name="taskStatus"
+              value={form.taskStatus}
+              onChange={updateField}
+            >
               {TASK_STATUSES.map((status) => (
                 <option key={status} value={status}>
                   {t(`taskStatus.${status}`)}

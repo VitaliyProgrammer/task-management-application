@@ -1,0 +1,111 @@
+.table {
+  min-width: 680px;
+}
+
+/*
+ * Symmetric layout approved in the design:
+ * the user block starts 28px from the left edge,
+ * the role select ends 28px from the right edge.
+ */
+
+.table th.userColumn,
+.table td.userColumn {
+  padding-left: 28px;
+}
+
+.table th.roleColumn,
+.table td.roleColumn {
+  padding-right: 28px;
+  text-align: right;
+}
+
+.userHeader {
+  display: inline-block;
+  width: 190px;
+  text-align: center;
+}
+
+.roleHeader {
+  display: inline-block;
+  width: 120px;
+  text-align: center;
+}
+
+.center {
+  text-align: center !important;
+}
+
+/* ===== Cells ===== */
+
+.person {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.personText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.flags {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+
+.flag {
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  background: #f1f5f3;
+  color: #6b7f74;
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+.flagOn {
+  background: var(--color-primary-soft);
+  color: var(--color-primary-dark);
+}
+
+/* ===== Role select with its own arrow, right next to the text ===== */
+
+.selectBox {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 120px;
+}
+
+.select {
+  width: 120px;
+  height: 40px;
+  padding: 0 32px 0 14px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 12px;
+  background: var(--color-surface);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  appearance: none;
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: var(--focus-ring);
+}
+
+.select:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.chevron {
+  position: absolute;
+  right: 12px;
+  color: var(--color-nav);
+  pointer-events: none;
+}

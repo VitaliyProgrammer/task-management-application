@@ -1,0 +1,114 @@
+.layout {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+/* ===== List ===== */
+
+.list {
+  flex: 999 1 420px;
+  min-width: 0;
+  padding: 10px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition);
+}
+
+.row:hover {
+  background: var(--color-bg);
+}
+
+.chipCell {
+  min-width: 120px;
+}
+
+.description {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.hex {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+/* ===== Form ===== */
+
+.form {
+  flex: 1 1 300px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formTitle {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.legend {
+  margin-bottom: 8px;
+  padding: 0;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.palette {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.swatch {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--color-surface);
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(18, 53, 36, 0.15);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.swatch:hover {
+  transform: scale(1.12);
+}
+
+.swatchSelected {
+  border-color: var(--color-text);
+}
+
+.colorInput {
+  width: 40px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.preview {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}

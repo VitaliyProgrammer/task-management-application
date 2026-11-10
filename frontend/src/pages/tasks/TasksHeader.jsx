@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 export function TasksHeader({ subtitle, children }) {
   const { t } = useTranslation();
 
-  const viewClass = ({ isActive }) => `segmented__item ${isActive ? 'segmented__item--active' : ''}`;
+  const viewClass = ({ isActive }) =>
+    `segmented__item ${isActive ? 'segmented__item--active' : ''}`;
 
   return (
     <header className="page-header">

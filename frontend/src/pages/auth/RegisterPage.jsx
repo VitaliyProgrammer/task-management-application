@@ -79,15 +79,30 @@ export function RegisterPage() {
       <form onSubmit={handleSubmit} style={{ display: 'grid', gap: 16 }}>
         <ErrorAlert error={error} />
 
-        <div className="form-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))' }}>
+        <div
+          className="form-grid"
+          style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))' }}
+        >
           <label className="field">
             {t('fields.firstName')}
-            <input className="input" name="firstName" value={form.firstName} onChange={updateField} required />
+            <input
+              className="input"
+              name="firstName"
+              value={form.firstName}
+              onChange={updateField}
+              required
+            />
           </label>
 
           <label className="field">
             {t('fields.lastName')}
-            <input className="input" name="lastName" value={form.lastName} onChange={updateField} required />
+            <input
+              className="input"
+              name="lastName"
+              value={form.lastName}
+              onChange={updateField}
+              required
+            />
           </label>
         </div>
 
@@ -116,7 +131,9 @@ export function RegisterPage() {
             onChange={updateField}
             required
           />
-          <span className="field__hint">{t('register.passwordHint', { count: MIN_PASSWORD_LENGTH })}</span>
+          <span className="field__hint">
+            {t('register.passwordHint', { count: MIN_PASSWORD_LENGTH })}
+          </span>
         </label>
 
         <label className="field">
@@ -131,7 +148,9 @@ export function RegisterPage() {
             aria-invalid={passwordsMismatch}
             required
           />
-          {passwordsMismatch && <span className="field__error">{t('register.passwordsMismatch')}</span>}
+          {passwordsMismatch && (
+            <span className="field__error">{t('register.passwordsMismatch')}</span>
+          )}
         </label>
 
         <button type="submit" className="btn btn--primary btn--block" disabled={isSubmitting}>

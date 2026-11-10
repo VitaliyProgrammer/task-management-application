@@ -1,5 +1,7 @@
 package org.example.application.mapper;
 
+import static org.mapstruct.NullValuePropertyMappingStrategy.IGNORE;
+
 import org.example.domain.entity.Task;
 import org.example.presentation.dto.request.TaskCreateRequestDto;
 import org.example.presentation.dto.request.TaskUpdateRequestDto;
@@ -8,8 +10,6 @@ import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-
-import static org.mapstruct.NullValuePropertyMappingStrategy.IGNORE;
 
 @Mapper(componentModel = "spring")
 public interface TaskMapper {

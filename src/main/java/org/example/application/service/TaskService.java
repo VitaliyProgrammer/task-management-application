@@ -5,7 +5,6 @@ import org.example.presentation.dto.request.GoogleCalendarRequestDto;
 import org.example.presentation.dto.request.TaskCreateRequestDto;
 import org.example.presentation.dto.request.TaskSearchParameterDto;
 import org.example.presentation.dto.request.TaskUpdateRequestDto;
-import org.example.presentation.dto.request.TelegramRequestDto;
 import org.example.presentation.dto.response.EmailResponseDto;
 import org.example.presentation.dto.response.GoogleCalendarResponseDto;
 import org.example.presentation.dto.response.TaskResponseDto;

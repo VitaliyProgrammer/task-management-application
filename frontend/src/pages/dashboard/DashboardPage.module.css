@@ -135,7 +135,7 @@
 
 .fillHIGH {
   background: var(--priority-high-border);
-  box-shadow: 0 3px 6px rgba(185, 28, 28, 0.22);
+  box-shadow: 0 3px 6px var(--priority-high-shadow);
 }
 
 .fillMEDIUM {

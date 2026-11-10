@@ -11,7 +11,7 @@ import { Icon } from '../../components/Icon';
 import styles from './LabelsPage.module.css';
 
 const PALETTE = [
-  '#EF4444',
+  '#E57373',
   '#F59E0B',
   '#24955A',
   '#0EA5E9',

@@ -24,7 +24,8 @@ public interface TaskService {
 
     Page<TaskResponseDto> search(TaskSearchParameterDto searchParameter, Pageable pageable);
 
-    GoogleCalendarResponseDto sendNotificationToGoogleCalendar(GoogleCalendarRequestDto request);
+    GoogleCalendarResponseDto sendNotificationToGoogleCalendar(
+            Long taskId, GoogleCalendarRequestDto request);
 
     EmailResponseDto sendNotificationToEmail(Long taskId, EmailRequestDto request);
 

@@ -32,7 +32,7 @@ public class SecurityAccessConfiguration {
                                                 "/auth/**",
                                                 "/swagger-ui/**",
                                                 "/v3/api-docs/**",
-                                                "/oauth/google-calendar/**")
+                                                "/oauth/google-calendar/callback")
                                         .permitAll()
                                         .anyRequest()
                                         .authenticated())

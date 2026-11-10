@@ -111,7 +111,7 @@ public class UserServiceTest {
     public static UserProfileResponseDto userProfileResponse() {
 
         return new UserProfileResponseDto(
-                1L, "test@email.com", "Bob", "Johnson", Set.of("USER"), null, null, null);
+                1L, "test@email.com", "Bob", "Johnson", Set.of("USER"), null, null);
     }
 
     public static UserLoginRequestDto loginRequest() {

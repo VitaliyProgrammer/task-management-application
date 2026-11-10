@@ -9,6 +9,5 @@ public record UserProfileResponseDto(
         String lastName,
         Set<String> roles,
         String emailUsername,
-        String emailPassword,
         Long telegramChatId) {
 }

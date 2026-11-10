@@ -9,6 +9,10 @@ import org.example.presentation.dto.request.UserPatchProfileRequestDto;
 import org.example.presentation.dto.request.UserPutProfileRequestDto;
 import org.example.presentation.dto.request.UserUpdateRoleRequestDto;
 import org.example.presentation.dto.response.UserProfileResponseDto;
+import org.example.presentation.dto.response.UserSummaryResponseDto;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -29,6 +33,17 @@ public class UserController {
 
     private final UserService userService;
 
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @Operation(
+            summary = "Get all users",
+            description = "Returns a paginated list of users without any credentials")
+    public Page<UserSummaryResponseDto> getAll(@ParameterObject Pageable pageable) {
+
+        return userService.findAll(pageable);
+    }
+
     @GetMapping("/me")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
@@ -42,7 +57,7 @@ public class UserController {
 
     @PutMapping("/me")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @Operation(
             summary = "Update user profile",
             description = "Completely update personal user information")
@@ -54,7 +69,7 @@ public class UserController {
 
     @PatchMapping("/me")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @Operation(
             summary = "Update user profile",
             description = "Partially update personal user information")

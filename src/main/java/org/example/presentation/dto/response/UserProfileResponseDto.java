@@ -9,5 +9,7 @@ public record UserProfileResponseDto(
         String lastName,
         Set<String> roles,
         String emailUsername,
-        Long telegramChatId) {
+        Long telegramChatId,
+        boolean emailConnected,
+        boolean googleCalendarConnected) {
 }

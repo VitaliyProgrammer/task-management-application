@@ -23,6 +23,9 @@ import org.example.presentation.dto.request.UserRegistrationRequestDto;
 import org.example.presentation.dto.response.UserLoginResponseDto;
 import org.example.presentation.dto.response.UserProfileResponseDto;
 import org.example.presentation.dto.response.UserRegistrationResponseDto;
+import org.example.presentation.dto.response.UserSummaryResponseDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -93,6 +96,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserRegistrationResponseDto> findAllUsers() {
         return userRepository.findAll().stream().map(userMapper::toDto).toList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<UserSummaryResponseDto> findAll(Pageable pageable) {
+
+        return userRepository.findAll(pageable).map(userMapper::toSummaryDto);
     }
 
     @Override

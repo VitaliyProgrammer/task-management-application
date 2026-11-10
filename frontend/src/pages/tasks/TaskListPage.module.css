@@ -10,14 +10,18 @@
   gap: 14px;
 }
 
+/* Two native date inputs need ~280px side by side; when the grid column is
+   narrower, the second one wraps to its own line instead of overflowing. */
 .dateRange {
   display: flex;
+  flex-wrap: wrap;
   gap: 6px;
 }
 
 .dateRange .input {
+  flex: 1 1 140px;
   min-width: 0;
-  padding: 0 8px;
+  padding: 0 10px;
 }
 
 /* ===== Status / priority chips ===== */

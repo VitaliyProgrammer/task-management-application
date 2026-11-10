@@ -1,0 +1,60 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.legend {
+  margin-bottom: 8px;
+  padding: 0;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.choice {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 0 16px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color var(--transition),
+    border-color var(--transition);
+}
+
+.choice:hover {
+  background: var(--color-hover);
+}
+
+/* Selected priority takes the colors of its badge */
+.choiceSelected,
+.choiceSelected:hover {
+  background: var(--badge-bg);
+  border-color: var(--badge-border);
+  color: var(--badge-ink);
+  box-shadow: 0 1px 4px var(--badge-shadow);
+}
+
+.labelSelected,
+.labelSelected:hover {
+  background: var(--color-primary-soft);
+}

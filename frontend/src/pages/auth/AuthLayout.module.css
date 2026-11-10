@@ -1,0 +1,94 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* ===== Left: green brand panel ===== */
+
+.brandPanel {
+  flex: 1 1 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 48px;
+  color: var(--color-on-primary);
+  background-color: var(--color-primary);
+  background-image: radial-gradient(circle at 20% 15%, rgba(255, 255, 255, 0.18), transparent 45%);
+}
+
+.brandLink {
+  align-self: flex-start;
+  text-decoration: none;
+}
+
+.logoTile {
+  display: inline-flex;
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+
+  --logo-mark-width: 34px;
+  --logo-text-size: 26px;
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.brandTitle {
+  font-size: 40px;
+  line-height: 1.15;
+  font-weight: 800;
+  white-space: pre-line;
+}
+
+.brandSubtitle {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #e6f6ec;
+}
+
+.brandAside {
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* ===== Right: the form ===== */
+
+.formSide {
+  flex: 1 1 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+}
+
+.formBox {
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.language {
+  align-self: flex-end;
+}
+
+@media (max-width: 640px) {
+  .brandPanel {
+    padding: 28px 20px;
+    gap: 24px;
+  }
+
+  .brandTitle {
+    font-size: 30px;
+  }
+}

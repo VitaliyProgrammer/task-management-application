@@ -1,0 +1,212 @@
+/* ===== Summary cards ===== */
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+.statCard {
+  padding: 18px 20px;
+  border-radius: 18px;
+  background: var(--color-surface);
+  box-shadow: 0 2px 10px rgba(26, 107, 65, 0.07);
+}
+
+.statLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.statValue {
+  margin-top: 6px;
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.twoColumns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.twoColumns > :global(.card) {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* ===== Status bar: segments "grow" once when the page opens ===== */
+
+.statusBar {
+  display: flex;
+  gap: 6px;
+  height: 12px;
+  margin: 6px 0;
+}
+
+.statusSegment {
+  border-radius: var(--radius-pill);
+  background: var(--pill-dot);
+  box-shadow:
+    0 3px 6px rgba(18, 53, 36, 0.18),
+    0 1px 1px rgba(18, 53, 36, 0.1);
+  transform-origin: left center;
+  animation: grow 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.legend {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+
+.legendRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.legendName {
+  font-weight: 700;
+  color: var(--pill-ink);
+}
+
+.legendRow strong {
+  margin-left: auto;
+}
+
+/* ===== Priority bars ===== */
+
+.priorityList {
+  display: grid;
+  gap: 16px;
+}
+
+.priorityRow {
+  display: grid;
+  gap: 6px;
+}
+
+.priorityHeader {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.inkHIGH {
+  color: var(--priority-high-ink);
+}
+
+.inkMEDIUM {
+  color: var(--priority-medium-ink);
+}
+
+.inkLOW {
+  color: var(--priority-low-ink);
+}
+
+.track {
+  height: 10px;
+  border-radius: var(--radius-pill);
+  background: var(--color-hover);
+}
+
+.fill {
+  height: 10px;
+  border-radius: var(--radius-pill);
+  transform-origin: left center;
+  animation: grow 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.fillHIGH {
+  background: var(--priority-high-border);
+  box-shadow: 0 3px 6px rgba(185, 28, 28, 0.22);
+}
+
+.fillMEDIUM {
+  background: var(--priority-medium-border);
+  box-shadow: 0 3px 6px rgba(180, 100, 5, 0.25);
+}
+
+.fillLOW {
+  background: #34d399;
+  box-shadow: 0 3px 6px rgba(6, 95, 70, 0.22);
+}
+
+@keyframes grow {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ===== Lists (deadlines, projects) ===== */
+
+.listRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--color-hover);
+  border-radius: 12px;
+  color: var(--color-text);
+  text-decoration: none;
+  transition: background-color var(--transition);
+}
+
+a.listRow:hover {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.listText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  margin-right: auto;
+}
+
+.listTitle {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.due,
+.dueSoon,
+.dueOverdue {
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.due {
+  color: var(--color-text-muted);
+}
+
+.dueSoon {
+  color: var(--priority-medium-ink);
+}
+
+.dueOverdue {
+  color: var(--color-danger);
+}

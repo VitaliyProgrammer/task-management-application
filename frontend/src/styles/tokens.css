@@ -1,0 +1,95 @@
+/*
+ * Design tokens — the single source of truth for the Alijenta look.
+ * Change a value here and it changes everywhere in the app.
+ */
+
+:root {
+  /* Brand green */
+  --color-primary: #24955a;
+  --color-primary-dark: #1a6b41;
+  --color-primary-deep: #14532f;
+  --color-primary-highlight: #3dbe77;
+  --color-primary-soft: #dcf2e4;
+
+  /* The yellow "j" of the logo */
+  --color-accent: #f5b800;
+
+  /* Text */
+  --color-text: #123524;
+  --color-text-muted: #3d6b52;
+  --color-nav: #3b634d;
+  --color-on-primary: #ffffff;
+
+  /* Surfaces and borders */
+  --color-bg: #f2f8f4;
+  --color-surface: #ffffff;
+  --color-surface-soft: #f7fbf8;
+  --color-border: #dbede1;
+  --color-border-strong: #c5e3cf;
+  --color-hover: #edf6f0;
+
+  /* Danger (delete, log out, errors) */
+  --color-danger: #b91c1c;
+  --color-danger-soft: #fee2e2;
+  --color-danger-border: #fbcaca;
+
+  /* Task statuses: background tint, neon dot, text ink */
+  --status-not-started-bg: #fef5e4;
+  --status-not-started-dot: #f59e0b;
+  --status-not-started-ink: #92400e;
+
+  --status-in-progress-bg: #e9f4fc;
+  --status-in-progress-dot: #0ea5e9;
+  --status-in-progress-ink: #075985;
+
+  --status-completed-bg: #e4f5ec;
+  --status-completed-dot: #10b981;
+  --status-completed-ink: #1a6b41;
+
+  --status-unspecified-bg: #f1f5f3;
+  --status-unspecified-dot: #9ca3af;
+  --status-unspecified-ink: #4b5563;
+
+  /* Task priorities */
+  --priority-high-ink: #b91c1c;
+  --priority-high-bg: #fee2e2;
+  --priority-high-border: #f87171;
+  --priority-high-shadow: rgba(220, 38, 38, 0.18);
+
+  --priority-medium-ink: #92400e;
+  --priority-medium-bg: #fef3c7;
+  --priority-medium-border: #f59e0b;
+  --priority-medium-shadow: rgba(217, 119, 6, 0.18);
+
+  --priority-low-ink: #3b634d;
+  --priority-low-bg: #edf6f0;
+  --priority-low-border: #9cc2ab;
+  --priority-low-shadow: rgba(59, 99, 77, 0.15);
+
+  /* Shape */
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  /* Depth */
+  --shadow-small: 0 2px 8px rgba(18, 53, 36, 0.06);
+  --shadow-card: 0 8px 24px rgba(18, 53, 36, 0.07);
+  --shadow-lift: 0 12px 26px rgba(18, 53, 36, 0.13);
+  --shadow-button: 0 8px 18px rgba(26, 107, 65, 0.3);
+  --shadow-button-hover: 0 12px 26px rgba(26, 107, 65, 0.38);
+  --focus-ring: 0 0 0 3px rgba(36, 149, 90, 0.2);
+
+  /* Neon glow of the status dots */
+  --glow: 0 0 6px currentColor, 0 0 14px currentColor, 0 0 22px currentColor;
+
+  /* Typography */
+  --font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Motion */
+  --transition: 0.18s ease;
+
+  /* Logo proportions */
+  --logo-mark-width: 40px;
+  --logo-text-size: 30px;
+}

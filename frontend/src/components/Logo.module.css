@@ -1,0 +1,35 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.mark {
+  width: var(--logo-mark-width);
+  flex: none;
+}
+
+.wordmark {
+  font-size: var(--logo-text-size);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--color-primary-dark);
+
+  /* Trim the invisible space above and below the letters,
+     so the text lines up with the top and bottom of the lightning. */
+  text-box: trim-both cap alphabetic;
+}
+
+.j {
+  color: var(--color-accent);
+}
+
+/* White text for the green login panel */
+.inverted .wordmark {
+  color: var(--color-on-primary);
+}
+
+.inverted .j {
+  color: #ffd43b;
+}

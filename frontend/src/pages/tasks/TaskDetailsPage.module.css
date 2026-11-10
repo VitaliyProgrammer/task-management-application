@@ -1,0 +1,78 @@
+.breadcrumb {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.breadcrumb a {
+  text-decoration: none;
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Two columns on wide screens, one column on phones */
+.layout {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.mainColumn {
+  flex: 999 1 420px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sideColumn {
+  flex: 1 1 300px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mainColumn :global(.card),
+.sideColumn :global(.card) {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.description {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--color-text-muted);
+  white-space: pre-line;
+}
+
+/* ===== Details list ===== */
+
+.detailsList {
+  margin: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.detailsRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 14px;
+}
+
+.detailsRow dt {
+  color: var(--color-text-muted);
+}
+
+.detailsRow dd {
+  margin: 0;
+  font-weight: 700;
+  text-align: right;
+}

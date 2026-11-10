@@ -1,0 +1,328 @@
+{
+  "common": {
+    "loading": "Завантаження…",
+    "tryAgainLater": "Спробуйте ще раз трохи пізніше.",
+    "cancel": "Скасувати",
+    "save": "Зберегти",
+    "saved": "Збережено",
+    "delete": "Видалити",
+    "edit": "Редагувати",
+    "close": "Закрити",
+    "reset": "Скинути",
+    "previous": "Назад",
+    "next": "Далі",
+    "viewAll": "Усі",
+    "language": "Мова",
+    "breadcrumb": "Навігація"
+  },
+
+  "errors": {
+    "network": "Сервер недоступний. Перевірте, чи запущено бекенд.",
+    "forbidden": "У вас немає прав на цю дію.",
+    "unknown": "Щось пішло не так."
+  },
+
+  "nav": {
+    "main": "Головне меню",
+    "home": "Головна сторінка Alijenta",
+    "dashboard": "Огляд",
+    "tasks": "Задачі",
+    "projects": "Проєкти",
+    "labels": "Мітки",
+    "users": "Користувачі",
+    "profile": "Профіль"
+  },
+
+  "fields": {
+    "email": "Email",
+    "password": "Пароль",
+    "repeatPassword": "Повторіть пароль",
+    "firstName": "Ім'я",
+    "lastName": "Прізвище",
+    "title": "Назва",
+    "name": "Назва",
+    "description": "Опис",
+    "project": "Проєкт",
+    "assignee": "Виконавець",
+    "status": "Статус",
+    "priority": "Пріоритет",
+    "dueDate": "Дедлайн",
+    "created": "Створено",
+    "labels": "Мітки",
+    "startDate": "Дата початку",
+    "endDate": "Дата завершення",
+    "color": "Колір"
+  },
+
+  "taskStatus": {
+    "NOT_STARTED": "Не розпочато",
+    "IN_PROGRESS": "У роботі",
+    "COMPLETED": "Виконано",
+    "NO_SPECIFIED": "Без статусу"
+  },
+
+  "projectStatus": {
+    "INITIATED": "Ініційовано",
+    "IN_PROGRESS": "У роботі",
+    "COMPLETED": "Завершено",
+    "NO_SPECIFIED": "Без статусу"
+  },
+
+  "priority": {
+    "HIGH": "ВИСОКИЙ",
+    "MEDIUM": "СЕРЕДНІЙ",
+    "LOW": "НИЗЬКИЙ"
+  },
+
+  "login": {
+    "brandTitle": "Плануй. Відстежуй.\nНадсилай куди завгодно.",
+    "brandText": "Kanban-дошка, розумний пошук і сповіщення в Telegram, Email та Google Calendar.",
+    "title": "З поверненням",
+    "subtitle": "Увійдіть у свій робочий простір",
+    "demoTitle": "Демо-доступ:",
+    "useDemo": "Підставити демо",
+    "submit": "Увійти",
+    "noAccount": "Ще немає акаунта?",
+    "createOne": "Створити"
+  },
+
+  "register": {
+    "brandTitle": "Почніть організовувати\nза хвилину.",
+    "brandText": "Створіть акаунт, а потім підключіть Telegram, Email і Google Calendar у профілі.",
+    "perk1": "Kanban-дошка з розумними фільтрами",
+    "perk2": "Сповіщення в Telegram, Email і Calendar",
+    "perk3": "Файли до задач у Dropbox",
+    "title": "Створіть акаунт",
+    "subtitle": "Усі поля обов'язкові",
+    "passwordHint": "Щонайменше {{count}} символів",
+    "passwordsMismatch": "Паролі не збігаються",
+    "submit": "Створити акаунт",
+    "haveAccount": "Вже маєте акаунт?",
+    "logIn": "Увійти"
+  },
+
+  "dashboard": {
+    "title": "Огляд",
+    "greeting": "Радий вас бачити, {{name}}!",
+    "statistics": "Статистика",
+    "totalTasks": "Усього задач",
+    "dueThisWeek": "Дедлайн цього тижня",
+    "byStatus": "Задачі за статусом",
+    "byPriority": "Задачі за пріоритетом",
+    "upcoming": "Найближчі дедлайни",
+    "noDeadlines": "Найближчих дедлайнів немає. Чудово!",
+    "overdue": "Прострочено",
+    "today": "Сьогодні",
+    "tomorrow": "Завтра"
+  },
+
+  "tasks": {
+    "count_one": "{{count}} задача",
+    "count_few": "{{count}} задачі",
+    "count_many": "{{count}} задач",
+    "count_other": "{{count}} задачі",
+    "results_one": "{{count}} результат",
+    "results_few": "{{count}} результати",
+    "results_many": "{{count}} результатів",
+    "results_other": "{{count}} результату",
+    "view": "Вигляд",
+    "board": "Дошка",
+    "list": "Список",
+    "newTask": "Нова задача",
+    "editTask": "Редагування задачі",
+    "create": "Створити задачу",
+    "searchPlaceholder": "Пошук задач…",
+    "filters": "Фільтри",
+    "applyFilters": "Застосувати",
+    "dragHint": "Порада: перетягніть картку в іншу колонку, щоб змінити її статус.",
+    "emptyColumn": "Тут поки порожньо",
+    "due": "Дедлайн",
+    "unassigned": "Без виконавця",
+    "chooseProject": "Оберіть проєкт",
+    "allProjects": "Усі проєкти",
+    "anyone": "Будь-хто",
+    "dueBetween": "Дедлайн з – по",
+    "dueFrom": "Дедлайн з",
+    "dueTo": "Дедлайн по",
+    "hasAttachment": "Є вкладення",
+    "nothingFound": "Немає задач за цими фільтрами.",
+    "pageOf": "Сторінка {{page}} з {{total}}",
+    "details": "Деталі",
+    "noDescription": "Опису поки немає.",
+    "deleteTitle": "Видалити задачу?",
+    "deleteMessage": "«{{title}}» буде видалено разом із коментарями. Це не можна скасувати."
+  },
+
+  "comments": {
+    "title": "Коментарі",
+    "empty": "Коментарів ще немає. Будьте першим!",
+    "add": "Додати коментар",
+    "placeholder": "Напишіть щось…",
+    "post": "Надіслати"
+  },
+
+  "attachments": {
+    "title": "Вкладення",
+    "storedInDropbox": "Зберігається в Dropbox",
+    "empty": "Файлів ще немає.",
+    "uploaded": "Завантажено",
+    "download": "Завантажити",
+    "upload": "Завантажити файл",
+    "uploading": "Завантаження…"
+  },
+
+  "send": {
+    "title": "Надіслати задачу",
+    "telegram": "Надіслати виконавцю в Telegram",
+    "needsAssignee": "У задачі немає виконавця",
+    "telegramSent": "Задачу надсилаємо в Telegram.",
+    "send": "Надіслати",
+    "emailSent": "Задачу надсилаємо поштою.",
+    "calendar": "Google Calendar",
+    "startDate": "Дата початку",
+    "endDate": "Дата завершення",
+    "addToCalendar": "Додати в календар",
+    "calendarSent": "Подію додаємо у ваш календар.",
+    "calendarNotConnected": "Спершу підключіть Google Calendar у розділі"
+  },
+
+  "projects": {
+    "count_one": "{{count}} проєкт",
+    "count_few": "{{count}} проєкти",
+    "count_many": "{{count}} проєктів",
+    "count_other": "{{count}} проєкту",
+    "newProject": "Новий проєкт",
+    "editProject": "Редагування проєкту",
+    "empty": "Проєктів ще немає.",
+    "ends": "до",
+    "deleteTitle": "Видалити проєкт?",
+    "deleteMessage": "«{{name}}» і всі його задачі буде видалено. Це не можна скасувати."
+  },
+
+  "labels": {
+    "adminHint": "Створюйте, редагуйте та видаляйте мітки для задач",
+    "readOnlyHint": "Змінювати мітки можуть лише адміністратори",
+    "empty": "Міток ще немає.",
+    "newLabel": "Нова мітка",
+    "editLabel": "Редагування мітки",
+    "create": "Створити мітку",
+    "customColor": "Свій колір",
+    "optional": "необов'язково",
+    "preview": "Попередній вигляд",
+    "deleteTitle": "Видалити мітку?",
+    "deleteMessage": "Мітку «{{name}}» буде прибрано з усіх задач."
+  },
+
+  "users": {
+    "subtitle": "Керуйте ролями команди",
+    "searchPlaceholder": "Пошук за ім'ям або email…",
+    "user": "Користувач",
+    "notifications": "Сповіщення",
+    "role": "Роль",
+    "roleOf": "Роль користувача {{name}}",
+    "cannotChangeOwnRole": "Не можна змінити власну роль"
+  },
+
+  "profile": {
+    "personalInfo": "Особисті дані",
+    "saveChanges": "Зберегти зміни",
+    "integrations": "Інтеграції",
+    "connected": "Підключено",
+    "notConnected": "Не підключено",
+    "telegramHint": "Надішліть /start боту Alijenta в Telegram, щоб отримати свій chat ID.",
+    "chatId": "Chat ID",
+    "saveChatId": "Зберегти chat ID",
+    "gmailAddress": "Адреса Gmail",
+    "appPassword": "Пароль застосунку",
+    "appPasswordPlaceholder": "Введіть новий пароль застосунку",
+    "storedEncrypted": "Зберігається зашифрованим і більше не показується",
+    "saveEmail": "Зберегти налаштування пошти",
+    "calendarHint": "Увійдіть через Google, щоб Alijenta могла додавати задачі у ваш календар. Відключити можна будь-коли.",
+    "connectCalendar": "Підключити Google Calendar",
+    "disconnect": "Відключити",
+    "calendarConnected": "Google Calendar підключено.",
+    "calendarError": "Не вдалося підключити Google Calendar. Спробуйте ще раз.",
+    "dropboxHint": "Вкладення задач зберігаються в командному Dropbox. Його налаштовує адміністратор, тож тут нічого робити не потрібно.",
+    "uploadFromTask": "Завантажити файли із задачі",
+    "logoutTitle": "Вихід",
+    "logoutText": "Щоб знову побачити задачі, потрібно буде увійти ще раз.",
+    "logout": "Вийти"
+  },
+
+  "landing": {
+    "navigation": "Лендінг",
+    "features": "Можливості",
+    "howItWorks": "Як це працює",
+    "stack": "Технології",
+    "logIn": "Увійти",
+    "openApp": "Відкрити застосунок",
+    "eyebrow": "Full-stack пет-проєкт · Java · Spring Boot · React",
+    "heroTitle": "Задачі, які знаходять команду",
+    "heroAccent": "там, де вона вже є",
+    "heroLead": "Alijenta — застосунок для керування задачами з Kanban-дошкою, ролями доступу й динамічним пошуком. Будь-яку задачу можна надіслати в Telegram, Email або Google Calendar, а файли зберігаються в Dropbox.",
+    "tryDemo": "Спробувати демо",
+    "viewGithub": "Код на GitHub",
+    "demoNote": "Є демо-акаунт, реєстрація не потрібна.",
+    "featuresTitle": "Що вміє застосунок",
+    "featuresLead": "Усе нижче працює на справжньому REST API на Spring Boot.",
+    "feature": {
+      "board": {
+        "title": "Kanban-дошка й розумний пошук",
+        "text": "Фільтри за назвою, статусом, пріоритетом, виконавцем, проєктом, датами та вкладеннями на основі патерну Specification."
+      },
+      "security": {
+        "title": "Ролі та JWT",
+        "text": "Stateless-автентифікація через JWT з ролями USER і ADMIN та правилами доступу на рівні методів."
+      },
+      "telegram": {
+        "title": "Сповіщення в Telegram",
+        "text": "Надсилайте задачу виконавцю напряму через Telegram-бота, прив'язаного до його чату."
+      },
+      "email": {
+        "title": "Сповіщення поштою",
+        "text": "Надсилання через SMTP, облікові дані користувача зберігаються зашифрованими."
+      },
+      "calendar": {
+        "title": "Синхронізація з Google Calendar",
+        "text": "Підключіть календар через OAuth2 і перетворюйте будь-яку задачу на подію."
+      },
+      "dropbox": {
+        "title": "Вкладення в Dropbox",
+        "text": "Завантажуйте файли до задач і скачуйте їх пізніше, усе зберігається в Dropbox."
+      }
+    },
+    "howTitle": "Як працюють сповіщення",
+    "howLead": "Подієво й асинхронно: HTTP-запит ніколи не чекає на Telegram, SMTP чи Google.",
+    "step": "Крок {{number}}",
+    "flow": {
+      "step1": {
+        "title": "Дія в інтерфейсі",
+        "text": "Ви натискаєте «Надіслати в Telegram» на задачі."
+      },
+      "step2": {
+        "title": "Подія опублікована",
+        "text": "Сервіс публікує доменну подію й одразу відповідає."
+      },
+      "step3": {
+        "title": "Асинхронний лістенер",
+        "text": "Лістенер обробляє подію в окремому пулі потоків."
+      },
+      "step4": {
+        "title": "Доставлено",
+        "text": "Telegram, Email або Google Calendar отримує задачу."
+      }
+    },
+    "stackTitle": "Технології",
+    "diagram": {
+      "domain": "Доменна модель",
+      "architecture": "Архітектура застосунку",
+      "integration": "Інтеграції системи"
+    },
+    "builtBy": "Розробник"
+  },
+
+  "notFound": {
+    "text": "Такої сторінки не існує.",
+    "home": "На головну"
+  }
+}

@@ -1,0 +1,101 @@
+.board {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  align-items: start;
+}
+
+/* ===== Columns: tinted by status (variables come from statusStyle) ===== */
+
+.column {
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px;
+  border: 2px solid transparent;
+  border-radius: var(--radius-lg);
+  background: var(--pill-bg);
+  box-shadow: 0 8px 24px rgba(18, 53, 36, 0.09);
+  transition: border-color var(--transition);
+}
+
+.columnDrop {
+  border-color: var(--pill-dot);
+}
+
+.columnHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 6px;
+}
+
+.columnTitle {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--pill-ink);
+}
+
+.emptyColumn {
+  padding: 16px 6px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+/* ===== Task card ===== */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  border-radius: 16px;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-small);
+  color: var(--color-text);
+  text-decoration: none;
+  cursor: grab;
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition),
+    opacity var(--transition);
+}
+
+.card:hover {
+  color: var(--color-text);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lift);
+}
+
+.cardDragging {
+  opacity: 0.5;
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cardTitle {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.cardMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--color-text-muted);
+}

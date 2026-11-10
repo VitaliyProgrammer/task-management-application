@@ -369,6 +369,61 @@ For full environment setup, using Docker Compose is recommended.️
 
 ---
 
+## 🖥 Frontend — Alijenta
+
+The `frontend/` folder contains **Alijenta**, a React web client for this API.
+
+| Technology | Purpose |
+|------------|---------|
+| React 19 + Vite | UI and fast dev server / build |
+| React Router | Pages and protected routes (USER / ADMIN) |
+| TanStack Query | Server data, caching, loading and error states |
+| axios | API client with a JWT interceptor |
+| i18next | Interface in English, Ukrainian and Russian |
+| CSS Modules + design tokens | Styling, all colors in `src/styles/tokens.css` |
+| ESLint + Prettier | Code quality and formatting (checked in CI) |
+
+**Pages:** landing page, login, registration, dashboard, Kanban board (drag & drop),
+task list with filters, task details (comments, Dropbox attachments, Telegram / Email /
+Google Calendar), projects, labels, users (admin) and profile with integrations.
+
+### Run the frontend locally
+
+```bash
+# 1. Start the backend on http://localhost:8080 (see above)
+
+# 2. Start the frontend
+cd frontend
+npm install
+npm run dev
+```
+
+Open http://localhost:5173. In development Vite forwards every `/api/...` request
+to `http://localhost:8080`, so no extra configuration is needed.
+
+### Demo account
+
+On a fresh database Liquibase creates a demo workspace (team, projects, labels, tasks):
+
+```
+Email:    demo@alijenta.dev
+Password: Alijenta2026
+Role:     ADMIN
+```
+
+Set `spring.liquibase.contexts=prod` to skip the demo data.
+
+### API conventions used by the frontend
+
+- Errors follow **RFC 9457 Problem Details**:
+  `{ "title", "status", "detail", "timestamp" }` and `"errors": [...]` for validation.
+- Task notifications live under the task: `POST /tasks/{id}/notifications/{email|telegram|calendar}`.
+- Integrations of the current user: `PUT /users/me/telegram`, `PUT /users/me/email-credentials`.
+- Attachments are downloaded by id: `GET /dropbox/attachments/{id}/download`.
+- CORS origins are configured with `app.cors.allowed-origins`.
+
+---
+
 ## External Services Used
 
 - Google Calendar API
@@ -381,7 +436,7 @@ For full environment setup, using Docker Compose is recommended.️
 ## 📘 API Documentation
 
 All endpoints are documented in Swagger UI:
-[Open Swagger UI](http://localhost:9090/swagger-ui/index.html)
+[Open Swagger UI](http://localhost:8080/swagger-ui/index.html)
 
 ---
 

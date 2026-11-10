@@ -1,0 +1,98 @@
+.sidebar {
+  flex: 1 1 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 24px 16px;
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+}
+
+.brand {
+  padding: 0 8px;
+  text-decoration: none;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 46px;
+  padding: 0 14px;
+  border-radius: var(--radius-md);
+  color: var(--color-nav);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    background-color var(--transition),
+    color var(--transition);
+}
+
+.link:hover {
+  background: var(--color-hover);
+  color: var(--color-primary-dark);
+}
+
+.active,
+.active:hover {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-weight: 700;
+  box-shadow: var(--shadow-button);
+}
+
+.adminBadge {
+  margin-left: auto;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary-soft);
+  color: var(--color-primary-dark);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.active .adminBadge {
+  background: var(--color-surface);
+  color: var(--color-primary);
+}
+
+.language {
+  margin-top: auto;
+  display: flex;
+  background: var(--color-bg);
+  border-color: var(--color-border);
+}
+
+.language > * {
+  flex: 1;
+}
+
+/* Phones: the menu becomes a horizontal, scrollable strip on top */
+@media (max-width: 860px) {
+  .sidebar {
+    flex-basis: 100%;
+    gap: 14px;
+    border-right: 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .nav {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .link {
+    flex: none;
+  }
+
+  .language {
+    margin-top: 0;
+  }
+}

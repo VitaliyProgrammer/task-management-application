@@ -3,6 +3,8 @@ package org.example.infrastructure.configuration.dropbox;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.http.StandardHttpRequestor;
 import com.dropbox.core.v2.DbxClientV2;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.security.KeyStore;
 import java.security.cert.CertificateFactory;
@@ -11,15 +13,24 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
+/**
+ * Dropbox client. An extra trusted certificate is optional: when
+ * {@code dropbox/dropboxSSL.crt} is on the classpath it is added to the JDK trust store,
+ * otherwise the default trust store is used (CI, Docker, cloud hosting).
+ */
+@Slf4j
 @Configuration
 @RequiredArgsConstructor
 @EnableConfigurationProperties(DropBoxProperties.class)
 public class DropBoxConfiguration {
+
+    private static final String CLIENT_IDENTIFIER = "task-management-application";
 
     private static final String CERTIFICATE_PATH = "dropbox/dropboxSSL.crt";
 
@@ -27,51 +38,63 @@ public class DropBoxConfiguration {
 
     @Bean
     public DbxClientV2 dbxClientV2() throws Exception {
-        SSLContext sslContext = buildSslContext();
 
-        StandardHttpRequestor requestor = new StandardHttpRequestor(
-                StandardHttpRequestor.Config.DEFAULT_INSTANCE) {
+        DbxRequestConfig.Builder builder = DbxRequestConfig.newBuilder(CLIENT_IDENTIFIER);
+
+        ClassPathResource certificate = new ClassPathResource(CERTIFICATE_PATH);
+
+        if (certificate.exists()) {
+            builder.withHttpRequestor(requestorTrusting(certificate));
+        } else {
+            log.info("No custom Dropbox certificate found, using the default JDK trust store");
+        }
+
+        return new DbxClientV2(builder.build(), dropBoxProperties.accessToken());
+    }
+
+    private StandardHttpRequestor requestorTrusting(ClassPathResource certificate)
+            throws Exception {
+
+        SSLContext sslContext = buildSslContext(certificate);
+
+        return new StandardHttpRequestor(StandardHttpRequestor.Config.DEFAULT_INSTANCE) {
             @Override
             protected void configureConnection(HttpsURLConnection connection) {
                 connection.setSSLSocketFactory(sslContext.getSocketFactory());
             }
         };
-
-        DbxRequestConfig configuration = DbxRequestConfig
-                .newBuilder("task-management-application")
-                .withHttpRequestor(requestor)
-                .build();
-
-        return new DbxClientV2(configuration, dropBoxProperties.accessToken());
     }
 
-    private SSLContext buildSslContext() throws Exception {
-        CertificateFactory cf = CertificateFactory.getInstance("X.509");
+    private SSLContext buildSslContext(ClassPathResource certificate) throws Exception {
 
-        X509Certificate dropboxCert;
-        try (InputStream certStream = new ClassPathResource(CERTIFICATE_PATH).getInputStream()) {
-            dropboxCert = (X509Certificate) cf.generateCertificate(certStream);
+        CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
+
+        X509Certificate dropboxCertificate;
+        try (InputStream certificateStream = certificate.getInputStream()) {
+            dropboxCertificate =
+                    (X509Certificate) certificateFactory.generateCertificate(certificateStream);
         }
 
         KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
         try (InputStream defaultTrustStore = defaultTrustStoreStream()) {
             trustStore.load(defaultTrustStore, "changeit".toCharArray());
         }
-        trustStore.setCertificateEntry("dropbox", dropboxCert);
+        trustStore.setCertificateEntry("dropbox", dropboxCertificate);
 
-        TrustManagerFactory tmf =
+        TrustManagerFactory trustManagerFactory =
                 TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
-        tmf.init(trustStore);
+        trustManagerFactory.init(trustStore);
 
         SSLContext sslContext = SSLContext.getInstance("TLS");
-        sslContext.init(null, tmf.getTrustManagers(), null);
+        sslContext.init(null, trustManagerFactory.getTrustManagers(), null);
+
         return sslContext;
     }
 
     private InputStream defaultTrustStoreStream() throws Exception {
-        String javaHome = System.getProperty("java.home");
-        java.io.File certFile = new java.io.File(
-                javaHome + "/lib/security/cacerts");
-        return new java.io.FileInputStream(certFile);
+
+        File trustStoreFile = new File(System.getProperty("java.home") + "/lib/security/cacerts");
+
+        return new FileInputStream(trustStoreFile);
     }
 }

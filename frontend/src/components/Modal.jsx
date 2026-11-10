@@ -35,7 +35,12 @@ export function Modal({ title, onClose, children, footer, width = 640 }) {
         <div className={styles.header}>
           <h2 className={styles.title}>{title}</h2>
 
-          <button type="button" className="icon-btn" aria-label={t('common.close')} onClick={onClose}>
+          <button
+            type="button"
+            className="icon-btn"
+            aria-label={t('common.close')}
+            onClick={onClose}
+          >
             <Icon name="close" size={20} />
           </button>
         </div>
@@ -64,7 +69,12 @@ export function ConfirmDialog({ title, message, confirmLabel, onConfirm, onCance
             {t('common.cancel')}
           </button>
 
-          <button type="button" className="btn btn--danger" onClick={onConfirm} disabled={isPending}>
+          <button
+            type="button"
+            className="btn btn--danger"
+            onClick={onConfirm}
+            disabled={isPending}
+          >
             {confirmLabel ?? t('common.delete')}
           </button>
         </>

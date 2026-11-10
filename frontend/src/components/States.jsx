@@ -7,7 +7,10 @@ export function LoadingState({ fullScreen = false }) {
   const { t } = useTranslation();
 
   return (
-    <div className="state" style={fullScreen ? { minHeight: '100vh', paddingTop: '30vh' } : undefined}>
+    <div
+      className="state"
+      style={fullScreen ? { minHeight: '100vh', paddingTop: '30vh' } : undefined}
+    >
       <div className="spinner" />
       {t('common.loading')}
     </div>

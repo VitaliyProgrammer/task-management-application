@@ -269,18 +269,15 @@ public class TaskServiceTest {
 
         when(taskRepository.findById(task.getId())).thenReturn(Optional.of(task));
         when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
-        when(taskRepository.save(any(Task.class))).thenReturn(updatedTask);
-        when(taskMapper.toDto(updatedTask)).thenReturn(updateResponse());
+        TaskResponseDto expected = updateResponse();
+        when(taskMapper.toDto(task)).thenReturn(expected);
 
         TaskResponseDto result = taskServiceImpl.update(task.getId(), updateRequest());
 
-        assertEquals(task.getTitle(), result.title());
-        assertEquals(task.getDescription(), result.description());
+        assertEquals(expected, result);
 
-        verify(taskRepository).findById(task.getId());
+        verify(taskMapper).updateTaskFromDto(updateRequest(), task);
         verify(userRepository).findById(user.getId());
-        verify(taskRepository).save(task);
-        verify(taskMapper).toDto(updatedTask);
     }
 
     @Test

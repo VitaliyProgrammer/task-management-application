@@ -195,9 +195,9 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional(readOnly = true)
     public GoogleCalendarResponseDto sendNotificationToGoogleCalendar(
-            GoogleCalendarRequestDto request) {
+            Long taskId, GoogleCalendarRequestDto request) {
 
-        Task task = taskRepository.findById(request.taskId())
+        Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new TaskNotFoundException("Task no found!"));
 
         if (task.getProject() != null) {

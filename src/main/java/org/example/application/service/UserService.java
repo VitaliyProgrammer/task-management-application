@@ -10,6 +10,9 @@ import org.example.presentation.dto.request.UserRegistrationRequestDto;
 import org.example.presentation.dto.response.UserLoginResponseDto;
 import org.example.presentation.dto.response.UserProfileResponseDto;
 import org.example.presentation.dto.response.UserRegistrationResponseDto;
+import org.example.presentation.dto.response.UserSummaryResponseDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface UserService {
 
@@ -20,6 +23,8 @@ public interface UserService {
     Optional<User> findByEmail(String email);
 
     List<UserRegistrationResponseDto> findAllUsers();
+
+    Page<UserSummaryResponseDto> findAll(Pageable pageable);
 
     UserRegistrationResponseDto findById(Long id);
 

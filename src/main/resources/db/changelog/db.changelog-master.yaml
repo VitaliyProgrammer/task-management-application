@@ -21,3 +21,7 @@ databaseChangeLog:
       file: db/changelog/changes/10-create-attachments-table.yaml
   - include:
       file: db/changelog/changes/11-create-google-oauth-state-table.yaml
+  - include:
+      file: db/changelog/changes/12-insert-demo-data.yaml
+  - include:
+      file: db/changelog/changes/13-add-created-at-to-tasks.yaml

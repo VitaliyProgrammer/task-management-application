@@ -1,6 +1,7 @@
 package org.example.application.service;
 
 import java.io.IOException;
+import org.example.presentation.dto.response.AttachmentDownloadDto;
 import org.example.presentation.dto.response.AttachmentResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,4 +12,6 @@ public interface AttachmentService {
     AttachmentResponseDto uploadFile(Long taskId, MultipartFile file) throws IOException;
 
     Page<AttachmentResponseDto> findAttachmentsByTaskId(Long taskId, Pageable pageable);
+
+    AttachmentDownloadDto downloadFile(Long attachmentId);
 }

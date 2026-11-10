@@ -8,8 +8,10 @@ import org.example.application.service.DropBoxService;
 import org.example.domain.entity.Attachment;
 import org.example.domain.entity.Task;
 import org.example.domain.exception.TaskNotFoundException;
+import org.example.infrastructure.exception.integration.DropBoxFileNotFoundException;
 import org.example.infrastructure.repository.AttachmentRepository;
 import org.example.infrastructure.repository.TaskRepository;
+import org.example.presentation.dto.response.AttachmentDownloadDto;
 import org.example.presentation.dto.response.AttachmentResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -53,5 +55,18 @@ public class AttachmentServiceImpl implements AttachmentService {
         return attachmentRepository
                 .findAllAttachmentsByTaskId(taskId, pageable)
                 .map(attachmentMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public AttachmentDownloadDto downloadFile(Long attachmentId) {
+
+        Attachment attachment = attachmentRepository.findById(attachmentId)
+                .orElseThrow(() -> new DropBoxFileNotFoundException(
+                        "Attachment not found with id: " + attachmentId));
+
+        byte[] content = dropBoxService.downloadFile(attachment.getDropBoxFieldId());
+
+        return new AttachmentDownloadDto(attachment.getFilename(), content);
     }
 }

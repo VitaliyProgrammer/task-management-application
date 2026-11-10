@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-created-at-to-tasks
+      author: vitaliy
+      changes:
+        - addColumn:
+            tableName: tasks
+            columns:
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false

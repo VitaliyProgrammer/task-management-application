@@ -70,7 +70,7 @@ public class ProjectServiceTest {
     private ProjectUpdateRequestDto updateRequest() {
 
         return new ProjectUpdateRequestDto(
-                "Updated project", "About updated project", FIXED_DATE, null);
+                "Updated project", "About updated project", FIXED_DATE, null, null);
     }
 
     @Test

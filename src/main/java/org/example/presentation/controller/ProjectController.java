@@ -37,7 +37,7 @@ public class ProjectController {
     @Operation(
             summary = "Create a new project",
             description = "Creates a new project with the provided details")
-    public ProjectResponseDto create(@RequestBody ProjectCreateRequestDto request) {
+    public ProjectResponseDto create(@RequestBody @Valid ProjectCreateRequestDto request) {
         return projectService.create(request);
     }
 

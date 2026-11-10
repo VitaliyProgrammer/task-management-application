@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.example.application.service.TaskService;
 import org.example.presentation.dto.request.TaskCreateRequestDto;
 import org.example.presentation.dto.request.TaskSearchParameterDto;
@@ -26,7 +25,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Slf4j
 @RequestMapping("/tasks")
 @RequiredArgsConstructor
 @Tag(
@@ -42,8 +40,8 @@ public class TaskController {
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @Operation(summary = "Create a new task", description = "Create a new task within a project")
-    public TaskResponseDto create(@RequestBody TaskCreateRequestDto request) {
-        log.info("Received create task request: {}", request);
+    public TaskResponseDto create(@RequestBody @Valid TaskCreateRequestDto request) {
+
         return taskService.create(request);
     }
 

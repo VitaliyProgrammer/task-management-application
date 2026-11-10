@@ -39,8 +39,7 @@ export const usersApi = {
 
 export const tasksApi = {
   // Spring reads repeated params as arrays: ?status=A&status=B
-  search: (params) =>
-    unwrap(api.get('/tasks', { params, paramsSerializer: { indexes: null } })),
+  search: (params) => unwrap(api.get('/tasks', { params, paramsSerializer: { indexes: null } })),
 
   get: (id) => unwrap(api.get(`/tasks/${id}`)),
 
@@ -65,7 +64,8 @@ export const notificationsApi = {
 // ===== Comments =====
 
 export const commentsApi = {
-  list: (taskId) => unwrap(api.get('/comments', { params: { taskId, size: 100, sort: 'timestamp' } })),
+  list: (taskId) =>
+    unwrap(api.get('/comments', { params: { taskId, size: 100, sort: 'timestamp' } })),
 
   create: (taskId, text) => unwrap(api.post('/comments', { taskId, text })),
 };

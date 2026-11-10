@@ -1,0 +1,328 @@
+{
+  "common": {
+    "loading": "Загрузка…",
+    "tryAgainLater": "Попробуйте ещё раз чуть позже.",
+    "cancel": "Отмена",
+    "save": "Сохранить",
+    "saved": "Сохранено",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "close": "Закрыть",
+    "reset": "Сбросить",
+    "previous": "Назад",
+    "next": "Далее",
+    "viewAll": "Все",
+    "language": "Язык",
+    "breadcrumb": "Навигация"
+  },
+
+  "errors": {
+    "network": "Сервер недоступен. Проверьте, запущен ли бэкенд.",
+    "forbidden": "У вас нет прав на это действие.",
+    "unknown": "Что-то пошло не так."
+  },
+
+  "nav": {
+    "main": "Главное меню",
+    "home": "Главная страница Alijenta",
+    "dashboard": "Обзор",
+    "tasks": "Задачи",
+    "projects": "Проекты",
+    "labels": "Метки",
+    "users": "Пользователи",
+    "profile": "Профиль"
+  },
+
+  "fields": {
+    "email": "Email",
+    "password": "Пароль",
+    "repeatPassword": "Повторите пароль",
+    "firstName": "Имя",
+    "lastName": "Фамилия",
+    "title": "Название",
+    "name": "Название",
+    "description": "Описание",
+    "project": "Проект",
+    "assignee": "Исполнитель",
+    "status": "Статус",
+    "priority": "Приоритет",
+    "dueDate": "Дедлайн",
+    "created": "Создано",
+    "labels": "Метки",
+    "startDate": "Дата начала",
+    "endDate": "Дата окончания",
+    "color": "Цвет"
+  },
+
+  "taskStatus": {
+    "NOT_STARTED": "Не начато",
+    "IN_PROGRESS": "В работе",
+    "COMPLETED": "Выполнено",
+    "NO_SPECIFIED": "Без статуса"
+  },
+
+  "projectStatus": {
+    "INITIATED": "Инициирован",
+    "IN_PROGRESS": "В работе",
+    "COMPLETED": "Завершён",
+    "NO_SPECIFIED": "Без статуса"
+  },
+
+  "priority": {
+    "HIGH": "ВЫСОКИЙ",
+    "MEDIUM": "СРЕДНИЙ",
+    "LOW": "НИЗКИЙ"
+  },
+
+  "login": {
+    "brandTitle": "Планируй. Отслеживай.\nОтправляй куда угодно.",
+    "brandText": "Kanban-доска, умный поиск и уведомления в Telegram, Email и Google Calendar.",
+    "title": "С возвращением",
+    "subtitle": "Войдите в своё рабочее пространство",
+    "demoTitle": "Демо-доступ:",
+    "useDemo": "Подставить демо",
+    "submit": "Войти",
+    "noAccount": "Ещё нет аккаунта?",
+    "createOne": "Создать"
+  },
+
+  "register": {
+    "brandTitle": "Начните организовывать\nза минуту.",
+    "brandText": "Создайте аккаунт, а затем подключите Telegram, Email и Google Calendar в профиле.",
+    "perk1": "Kanban-доска с умными фильтрами",
+    "perk2": "Уведомления в Telegram, Email и Calendar",
+    "perk3": "Файлы к задачам в Dropbox",
+    "title": "Создайте аккаунт",
+    "subtitle": "Все поля обязательны",
+    "passwordHint": "Не менее {{count}} символов",
+    "passwordsMismatch": "Пароли не совпадают",
+    "submit": "Создать аккаунт",
+    "haveAccount": "Уже есть аккаунт?",
+    "logIn": "Войти"
+  },
+
+  "dashboard": {
+    "title": "Обзор",
+    "greeting": "Рад вас видеть, {{name}}!",
+    "statistics": "Статистика",
+    "totalTasks": "Всего задач",
+    "dueThisWeek": "Дедлайн на этой неделе",
+    "byStatus": "Задачи по статусу",
+    "byPriority": "Задачи по приоритету",
+    "upcoming": "Ближайшие дедлайны",
+    "noDeadlines": "Ближайших дедлайнов нет. Отлично!",
+    "overdue": "Просрочено",
+    "today": "Сегодня",
+    "tomorrow": "Завтра"
+  },
+
+  "tasks": {
+    "count_one": "{{count}} задача",
+    "count_few": "{{count}} задачи",
+    "count_many": "{{count}} задач",
+    "count_other": "{{count}} задачи",
+    "results_one": "{{count}} результат",
+    "results_few": "{{count}} результата",
+    "results_many": "{{count}} результатов",
+    "results_other": "{{count}} результата",
+    "view": "Вид",
+    "board": "Доска",
+    "list": "Список",
+    "newTask": "Новая задача",
+    "editTask": "Редактирование задачи",
+    "create": "Создать задачу",
+    "searchPlaceholder": "Поиск задач…",
+    "filters": "Фильтры",
+    "applyFilters": "Применить",
+    "dragHint": "Совет: перетащите карточку в другую колонку, чтобы изменить её статус.",
+    "emptyColumn": "Здесь пока пусто",
+    "due": "Дедлайн",
+    "unassigned": "Без исполнителя",
+    "chooseProject": "Выберите проект",
+    "allProjects": "Все проекты",
+    "anyone": "Любой",
+    "dueBetween": "Дедлайн с – по",
+    "dueFrom": "Дедлайн с",
+    "dueTo": "Дедлайн по",
+    "hasAttachment": "Есть вложение",
+    "nothingFound": "Нет задач по этим фильтрам.",
+    "pageOf": "Страница {{page}} из {{total}}",
+    "details": "Детали",
+    "noDescription": "Описания пока нет.",
+    "deleteTitle": "Удалить задачу?",
+    "deleteMessage": "«{{title}}» будет удалена вместе с комментариями. Это нельзя отменить."
+  },
+
+  "comments": {
+    "title": "Комментарии",
+    "empty": "Комментариев ещё нет. Будьте первым!",
+    "add": "Добавить комментарий",
+    "placeholder": "Напишите что-нибудь…",
+    "post": "Отправить"
+  },
+
+  "attachments": {
+    "title": "Вложения",
+    "storedInDropbox": "Хранится в Dropbox",
+    "empty": "Файлов ещё нет.",
+    "uploaded": "Загружено",
+    "download": "Скачать",
+    "upload": "Загрузить файл",
+    "uploading": "Загрузка…"
+  },
+
+  "send": {
+    "title": "Отправить задачу",
+    "telegram": "Отправить исполнителю в Telegram",
+    "needsAssignee": "У задачи нет исполнителя",
+    "telegramSent": "Задача отправляется в Telegram.",
+    "send": "Отправить",
+    "emailSent": "Задача отправляется по почте.",
+    "calendar": "Google Calendar",
+    "startDate": "Дата начала",
+    "endDate": "Дата окончания",
+    "addToCalendar": "Добавить в календарь",
+    "calendarSent": "Событие добавляется в ваш календарь.",
+    "calendarNotConnected": "Сначала подключите Google Calendar в разделе"
+  },
+
+  "projects": {
+    "count_one": "{{count}} проект",
+    "count_few": "{{count}} проекта",
+    "count_many": "{{count}} проектов",
+    "count_other": "{{count}} проекта",
+    "newProject": "Новый проект",
+    "editProject": "Редактирование проекта",
+    "empty": "Проектов ещё нет.",
+    "ends": "до",
+    "deleteTitle": "Удалить проект?",
+    "deleteMessage": "«{{name}}» и все его задачи будут удалены. Это нельзя отменить."
+  },
+
+  "labels": {
+    "adminHint": "Создавайте, редактируйте и удаляйте метки для задач",
+    "readOnlyHint": "Изменять метки могут только администраторы",
+    "empty": "Меток ещё нет.",
+    "newLabel": "Новая метка",
+    "editLabel": "Редактирование метки",
+    "create": "Создать метку",
+    "customColor": "Свой цвет",
+    "optional": "необязательно",
+    "preview": "Предпросмотр",
+    "deleteTitle": "Удалить метку?",
+    "deleteMessage": "Метка «{{name}}» будет убрана со всех задач."
+  },
+
+  "users": {
+    "subtitle": "Управляйте ролями команды",
+    "searchPlaceholder": "Поиск по имени или email…",
+    "user": "Пользователь",
+    "notifications": "Уведомления",
+    "role": "Роль",
+    "roleOf": "Роль пользователя {{name}}",
+    "cannotChangeOwnRole": "Нельзя изменить собственную роль"
+  },
+
+  "profile": {
+    "personalInfo": "Личные данные",
+    "saveChanges": "Сохранить изменения",
+    "integrations": "Интеграции",
+    "connected": "Подключено",
+    "notConnected": "Не подключено",
+    "telegramHint": "Отправьте /start боту Alijenta в Telegram, чтобы получить свой chat ID.",
+    "chatId": "Chat ID",
+    "saveChatId": "Сохранить chat ID",
+    "gmailAddress": "Адрес Gmail",
+    "appPassword": "Пароль приложения",
+    "appPasswordPlaceholder": "Введите новый пароль приложения",
+    "storedEncrypted": "Хранится в зашифрованном виде и больше не показывается",
+    "saveEmail": "Сохранить настройки почты",
+    "calendarHint": "Войдите через Google, чтобы Alijenta могла добавлять задачи в ваш календарь. Отключить можно в любой момент.",
+    "connectCalendar": "Подключить Google Calendar",
+    "disconnect": "Отключить",
+    "calendarConnected": "Google Calendar подключён.",
+    "calendarError": "Не удалось подключить Google Calendar. Попробуйте ещё раз.",
+    "dropboxHint": "Вложения задач хранятся в командном Dropbox. Его настраивает администратор, поэтому здесь ничего делать не нужно.",
+    "uploadFromTask": "Загрузить файлы из задачи",
+    "logoutTitle": "Выход",
+    "logoutText": "Чтобы снова увидеть задачи, нужно будет войти ещё раз.",
+    "logout": "Выйти"
+  },
+
+  "landing": {
+    "navigation": "Лендинг",
+    "features": "Возможности",
+    "howItWorks": "Как это работает",
+    "stack": "Технологии",
+    "logIn": "Войти",
+    "openApp": "Открыть приложение",
+    "eyebrow": "Full-stack пет-проект · Java · Spring Boot · React",
+    "heroTitle": "Задачи, которые находят команду",
+    "heroAccent": "там, где она уже есть",
+    "heroLead": "Alijenta — приложение для управления задачами с Kanban-доской, ролями доступа и динамическим поиском. Любую задачу можно отправить в Telegram, Email или Google Calendar, а файлы хранятся в Dropbox.",
+    "tryDemo": "Попробовать демо",
+    "viewGithub": "Код на GitHub",
+    "demoNote": "Есть демо-аккаунт, регистрация не нужна.",
+    "featuresTitle": "Что умеет приложение",
+    "featuresLead": "Всё ниже работает на настоящем REST API на Spring Boot.",
+    "feature": {
+      "board": {
+        "title": "Kanban-доска и умный поиск",
+        "text": "Фильтры по названию, статусу, приоритету, исполнителю, проекту, датам и вложениям на основе паттерна Specification."
+      },
+      "security": {
+        "title": "Роли и JWT",
+        "text": "Stateless-аутентификация через JWT с ролями USER и ADMIN и правилами доступа на уровне методов."
+      },
+      "telegram": {
+        "title": "Уведомления в Telegram",
+        "text": "Отправляйте задачу исполнителю напрямую через Telegram-бота, привязанного к его чату."
+      },
+      "email": {
+        "title": "Уведомления по почте",
+        "text": "Отправка через SMTP, учётные данные пользователя хранятся в зашифрованном виде."
+      },
+      "calendar": {
+        "title": "Синхронизация с Google Calendar",
+        "text": "Подключите календарь через OAuth2 и превращайте любую задачу в событие."
+      },
+      "dropbox": {
+        "title": "Вложения в Dropbox",
+        "text": "Загружайте файлы к задачам и скачивайте их позже, всё хранится в Dropbox."
+      }
+    },
+    "howTitle": "Как работают уведомления",
+    "howLead": "Событийно и асинхронно: HTTP-запрос никогда не ждёт Telegram, SMTP или Google.",
+    "step": "Шаг {{number}}",
+    "flow": {
+      "step1": {
+        "title": "Действие в интерфейсе",
+        "text": "Вы нажимаете «Отправить в Telegram» на задаче."
+      },
+      "step2": {
+        "title": "Событие опубликовано",
+        "text": "Сервис публикует доменное событие и сразу отвечает."
+      },
+      "step3": {
+        "title": "Асинхронный листенер",
+        "text": "Листенер обрабатывает событие в отдельном пуле потоков."
+      },
+      "step4": {
+        "title": "Доставлено",
+        "text": "Telegram, Email или Google Calendar получает задачу."
+      }
+    },
+    "stackTitle": "Технологии",
+    "diagram": {
+      "domain": "Доменная модель",
+      "architecture": "Архитектура приложения",
+      "integration": "Интеграции системы"
+    },
+    "builtBy": "Разработчик"
+  },
+
+  "notFound": {
+    "text": "Такой страницы не существует.",
+    "home": "На главную"
+  }
+}

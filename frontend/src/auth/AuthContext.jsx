@@ -4,10 +4,9 @@ import { LOGOUT_EVENT } from '../api/client';
 import { tokenStorage } from '../api/tokenStorage';
 import { authApi, profileApi } from '../api/endpoints';
 import { isAdmin } from '../lib/people';
+import { queryKeys } from '../hooks/queries';
 
 const AuthContext = createContext(null);
-
-export const PROFILE_QUERY_KEY = ['profile'];
 
 export function AuthProvider({ children }) {
   const queryClient = useQueryClient();
@@ -17,7 +16,7 @@ export function AuthProvider({ children }) {
 
   // The profile tells us who is logged in and which roles they have.
   const profileQuery = useQuery({
-    queryKey: PROFILE_QUERY_KEY,
+    queryKey: queryKeys.profile,
     queryFn: profileApi.get,
     enabled: Boolean(token),
     retry: false,

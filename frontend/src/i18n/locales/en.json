@@ -1,0 +1,319 @@
+{
+  "common": {
+    "loading": "Loading…",
+    "tryAgainLater": "Please try again a bit later.",
+    "cancel": "Cancel",
+    "save": "Save",
+    "saved": "Saved",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "reset": "Reset",
+    "previous": "Prev",
+    "next": "Next",
+    "viewAll": "View all",
+    "language": "Language",
+    "breadcrumb": "Breadcrumb"
+  },
+
+  "errors": {
+    "network": "The server is not reachable. Check that the backend is running.",
+    "forbidden": "You do not have permission to do this.",
+    "unknown": "Something went wrong."
+  },
+
+  "nav": {
+    "main": "Main",
+    "home": "Alijenta home page",
+    "dashboard": "Dashboard",
+    "tasks": "Tasks",
+    "projects": "Projects",
+    "labels": "Labels",
+    "users": "Users",
+    "profile": "Profile"
+  },
+
+  "fields": {
+    "email": "Email",
+    "password": "Password",
+    "repeatPassword": "Repeat password",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "title": "Title",
+    "name": "Name",
+    "description": "Description",
+    "project": "Project",
+    "assignee": "Assignee",
+    "status": "Status",
+    "priority": "Priority",
+    "dueDate": "Due date",
+    "created": "Created",
+    "labels": "Labels",
+    "startDate": "Start date",
+    "endDate": "End date",
+    "color": "Color"
+  },
+
+  "taskStatus": {
+    "NOT_STARTED": "Not started",
+    "IN_PROGRESS": "In progress",
+    "COMPLETED": "Completed",
+    "NO_SPECIFIED": "No status"
+  },
+
+  "projectStatus": {
+    "INITIATED": "Initiated",
+    "IN_PROGRESS": "In progress",
+    "COMPLETED": "Completed",
+    "NO_SPECIFIED": "No status"
+  },
+
+  "priority": {
+    "HIGH": "HIGH",
+    "MEDIUM": "MEDIUM",
+    "LOW": "LOW"
+  },
+
+  "login": {
+    "brandTitle": "Plan it. Track it.\nSend it anywhere.",
+    "brandText": "Kanban board, smart search and notifications to Telegram, Email and Google Calendar.",
+    "title": "Welcome back",
+    "subtitle": "Log in to your workspace",
+    "demoTitle": "Demo access:",
+    "useDemo": "Use demo account",
+    "submit": "Log in",
+    "noAccount": "No account yet?",
+    "createOne": "Create one"
+  },
+
+  "register": {
+    "brandTitle": "Start organizing\nin a minute.",
+    "brandText": "Create an account, then connect Telegram, Email and Google Calendar in your profile.",
+    "perk1": "Kanban board with smart filters",
+    "perk2": "Telegram, Email and Calendar notifications",
+    "perk3": "File attachments in Dropbox",
+    "title": "Create your account",
+    "subtitle": "All fields are required",
+    "passwordHint": "At least {{count}} characters",
+    "passwordsMismatch": "Passwords do not match",
+    "submit": "Create account",
+    "haveAccount": "Already have an account?",
+    "logIn": "Log in"
+  },
+
+  "dashboard": {
+    "title": "Dashboard",
+    "greeting": "Good to see you, {{name}}!",
+    "statistics": "Statistics",
+    "totalTasks": "Total tasks",
+    "dueThisWeek": "Due this week",
+    "byStatus": "Tasks by status",
+    "byPriority": "Tasks by priority",
+    "upcoming": "Upcoming deadlines",
+    "noDeadlines": "No upcoming deadlines. Nice!",
+    "overdue": "Overdue",
+    "today": "Today",
+    "tomorrow": "Tomorrow"
+  },
+
+  "tasks": {
+    "count_one": "{{count}} task",
+    "count_other": "{{count}} tasks",
+    "results_one": "{{count}} result",
+    "results_other": "{{count}} results",
+    "view": "View",
+    "board": "Board",
+    "list": "List",
+    "newTask": "New task",
+    "editTask": "Edit task",
+    "create": "Create task",
+    "searchPlaceholder": "Search tasks…",
+    "filters": "Filters",
+    "applyFilters": "Apply filters",
+    "dragHint": "Tip: drag a card to another column to change its status.",
+    "emptyColumn": "No tasks here",
+    "due": "Due",
+    "unassigned": "Unassigned",
+    "chooseProject": "Choose a project",
+    "allProjects": "All projects",
+    "anyone": "Anyone",
+    "dueBetween": "Due from – to",
+    "dueFrom": "Due from",
+    "dueTo": "Due to",
+    "hasAttachment": "Has attachment",
+    "nothingFound": "No tasks match these filters.",
+    "pageOf": "Page {{page}} of {{total}}",
+    "details": "Details",
+    "noDescription": "No description yet.",
+    "deleteTitle": "Delete task?",
+    "deleteMessage": "\"{{title}}\" will be deleted together with its comments. This cannot be undone."
+  },
+
+  "comments": {
+    "title": "Comments",
+    "empty": "No comments yet. Be the first!",
+    "add": "Add a comment",
+    "placeholder": "Write something…",
+    "post": "Post comment"
+  },
+
+  "attachments": {
+    "title": "Attachments",
+    "storedInDropbox": "Stored in Dropbox",
+    "empty": "No files attached yet.",
+    "uploaded": "Uploaded",
+    "download": "Download",
+    "upload": "Upload a file",
+    "uploading": "Uploading…"
+  },
+
+  "send": {
+    "title": "Send task",
+    "telegram": "Send to assignee in Telegram",
+    "needsAssignee": "The task has no assignee",
+    "telegramSent": "The task is on its way to Telegram.",
+    "send": "Send",
+    "emailSent": "The task is on its way by email.",
+    "calendar": "Google Calendar",
+    "startDate": "Start date",
+    "endDate": "End date",
+    "addToCalendar": "Add to calendar",
+    "calendarSent": "The event is being added to your calendar.",
+    "calendarNotConnected": "Connect Google Calendar first in your"
+  },
+
+  "projects": {
+    "count_one": "{{count}} project",
+    "count_other": "{{count}} projects",
+    "newProject": "New project",
+    "editProject": "Edit project",
+    "empty": "No projects yet.",
+    "ends": "ends",
+    "deleteTitle": "Delete project?",
+    "deleteMessage": "\"{{name}}\" and all its tasks will be deleted. This cannot be undone."
+  },
+
+  "labels": {
+    "adminHint": "Create, edit and delete labels for tasks",
+    "readOnlyHint": "Only administrators can change labels",
+    "empty": "No labels yet.",
+    "newLabel": "New label",
+    "editLabel": "Edit label",
+    "create": "Create label",
+    "customColor": "Custom color",
+    "optional": "optional",
+    "preview": "Preview",
+    "deleteTitle": "Delete label?",
+    "deleteMessage": "The label \"{{name}}\" will be removed from all tasks."
+  },
+
+  "users": {
+    "subtitle": "Manage roles of your team",
+    "searchPlaceholder": "Search by name or email…",
+    "user": "User",
+    "notifications": "Notifications",
+    "role": "Role",
+    "roleOf": "Role of {{name}}",
+    "cannotChangeOwnRole": "You cannot change your own role"
+  },
+
+  "profile": {
+    "personalInfo": "Personal information",
+    "saveChanges": "Save changes",
+    "integrations": "Integrations",
+    "connected": "Connected",
+    "notConnected": "Not connected",
+    "telegramHint": "Send /start to the Alijenta bot in Telegram to get your chat ID.",
+    "chatId": "Chat ID",
+    "saveChatId": "Save chat ID",
+    "gmailAddress": "Gmail address",
+    "appPassword": "App password",
+    "appPasswordPlaceholder": "Enter a new app password",
+    "storedEncrypted": "Stored encrypted, never shown again",
+    "saveEmail": "Save email settings",
+    "calendarHint": "Sign in with Google to let Alijenta add tasks to your calendar. You can disconnect at any time.",
+    "connectCalendar": "Connect Google Calendar",
+    "disconnect": "Disconnect",
+    "calendarConnected": "Google Calendar is connected.",
+    "calendarError": "Google Calendar could not be connected. Please try again.",
+    "dropboxHint": "Task attachments are stored in the team Dropbox. It is set up by the administrator, so there is nothing to configure here.",
+    "uploadFromTask": "Upload files from a task",
+    "logoutTitle": "Log out",
+    "logoutText": "You will need to sign in again to see your tasks.",
+    "logout": "Log out"
+  },
+
+  "landing": {
+    "navigation": "Landing page",
+    "features": "Features",
+    "howItWorks": "How it works",
+    "stack": "Tech stack",
+    "logIn": "Log in",
+    "openApp": "Open the app",
+    "eyebrow": "Full-stack pet project · Java · Spring Boot · React",
+    "heroTitle": "Tasks that reach your team",
+    "heroAccent": "where they already are",
+    "heroLead": "Alijenta is a task management app with a Kanban board, role-based access and dynamic search. Every task can be sent to Telegram, Email or Google Calendar, and files live in Dropbox.",
+    "tryDemo": "Try live demo",
+    "viewGithub": "View on GitHub",
+    "demoNote": "Demo account included, no registration needed.",
+    "featuresTitle": "What it can do",
+    "featuresLead": "Everything below is backed by a real Spring Boot REST API.",
+    "feature": {
+      "board": {
+        "title": "Kanban board & smart search",
+        "text": "Filter tasks by title, status, priority, assignee, project, dates and attachments, built on the Specification pattern."
+      },
+      "security": {
+        "title": "Roles & JWT security",
+        "text": "Stateless JWT authentication with USER and ADMIN roles and method-level access rules."
+      },
+      "telegram": {
+        "title": "Telegram notifications",
+        "text": "Send a task straight to the assignee through a Telegram bot linked to their chat."
+      },
+      "email": {
+        "title": "Email notifications",
+        "text": "SMTP delivery with user credentials stored encrypted, never in plain text."
+      },
+      "calendar": {
+        "title": "Google Calendar sync",
+        "text": "Connect your calendar with OAuth2 and turn any task into a calendar event."
+      },
+      "dropbox": {
+        "title": "Dropbox attachments",
+        "text": "Upload files to tasks and download them later, stored in Dropbox."
+      }
+    },
+    "howTitle": "How notifications work",
+    "howLead": "Event-driven and asynchronous: the HTTP request never waits for Telegram, SMTP or Google.",
+    "step": "Step {{number}}",
+    "flow": {
+      "step1": { "title": "Action in the UI", "text": "You press “Send to Telegram” on a task." },
+      "step2": {
+        "title": "Event published",
+        "text": "The service publishes a domain event and returns at once."
+      },
+      "step3": {
+        "title": "Async listener",
+        "text": "A listener picks the event up on a separate thread pool."
+      },
+      "step4": {
+        "title": "Delivered",
+        "text": "Telegram, Email or Google Calendar receives the task."
+      }
+    },
+    "stackTitle": "Tech stack",
+    "diagram": {
+      "domain": "Domain model",
+      "architecture": "Application architecture",
+      "integration": "System integration"
+    },
+    "builtBy": "Built by"
+  },
+
+  "notFound": {
+    "text": "This page does not exist.",
+    "home": "Go to the home page"
+  }
+}

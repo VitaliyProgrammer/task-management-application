@@ -11,6 +11,7 @@ import {
 
 // Query keys in one place. Mutations use them to say "this data is outdated now".
 export const queryKeys = {
+  profile: ['profile'],
   tasks: ['tasks'],
   task: (id) => ['tasks', 'one', String(id)],
   projects: ['projects'],

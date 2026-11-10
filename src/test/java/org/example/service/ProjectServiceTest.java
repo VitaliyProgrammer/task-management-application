@@ -130,14 +130,12 @@ public class ProjectServiceTest {
         Project existingProject = createProject();
 
         when(projectRepository.findById(1L)).thenReturn(Optional.of(existingProject));
-        when(projectRepository.save(any(Project.class))).thenReturn(existingProject);
-        when(projectMapper.toDto(any(Project.class))).thenReturn(responseProject());
+        when(projectMapper.toDto(existingProject)).thenReturn(responseProject());
 
         ProjectResponseDto result = projectServiceImpl.update(1L, updateRequest());
 
-        assertEquals("Updated project", existingProject.getName());
-        assertEquals("About updated project", existingProject.getDescription());
-        assertNotNull(result);
+        verify(projectMapper).updateProjectFromDto(updateRequest(), existingProject);
+        assertEquals(responseProject(), result);
     }
 
     @Test

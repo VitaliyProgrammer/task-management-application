@@ -33,7 +33,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @Operation(
-            summary = "Get user by ID",
+            summary = "Get information about user ",
             description = "Retrieve detailed about a specific user by their unique identifier. ")
     public UserProfileResponseDto getUserProfile(Authentication authentication) {
 

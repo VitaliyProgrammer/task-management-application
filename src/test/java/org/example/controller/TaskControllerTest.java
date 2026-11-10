@@ -209,7 +209,7 @@ public class TaskControllerTest {
 
         JsonNode jsonNode = objectMapper.readTree(response);
 
-        assertEquals(updateRequest().name(), jsonNode.get("title").asText());
+        assertEquals(updateRequest().title(), jsonNode.get("title").asText());
         assertEquals(updateRequest().description(), jsonNode.get("description").asText());
     }
 

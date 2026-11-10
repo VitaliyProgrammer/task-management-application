@@ -23,7 +23,6 @@ public interface TaskMapper {
     @Mapping(target = "assigneeId", source = "assignee.id")
     TaskResponseDto toDto(Task task);
 
-    @Mapping(target = "title", source = "name")
     @Mapping(target = "assignee", ignore = true)
     @Mapping(target = "labels", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = IGNORE)

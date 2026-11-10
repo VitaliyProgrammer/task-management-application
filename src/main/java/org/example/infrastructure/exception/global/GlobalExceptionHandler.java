@@ -1,14 +1,12 @@
 package org.example.infrastructure.exception.global;
 
 import java.lang.reflect.Field;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.example.domain.exception.ForbiddenActionException;
 import org.example.domain.exception.LabelAlreadyExistsException;
 import org.example.domain.exception.LabelNotFoundException;
@@ -26,6 +24,7 @@ import org.example.infrastructure.exception.integration.DropBoxUploadException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -35,202 +34,108 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+/**
+ * Turns every error into one JSON shape (RFC 9457 "Problem Details"):
+ * { "title", "status", "detail", "timestamp" } and, for validation, "errors": [...].
+ */
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    private static final DateTimeFormatter formatter =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd 'T' HH:mm:ss");
+    private static final String STORAGE_UNAVAILABLE =
+            "File storage is temporarily unavailable. Please try again later.";
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
-            MethodArgumentNotValidException ex,
+            MethodArgumentNotValidException exception,
             HttpHeaders headers,
-            HttpStatusCode statusCode,
+            HttpStatusCode status,
             WebRequest request) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now().format(formatter));
 
-        List<String> fieldsOrderDto =
-                ex.getBindingResult().getTarget() != null
-                        ? Arrays.stream(ex.getBindingResult().getTarget()
-                                .getClass().getDeclaredFields())
-                        .map(Field::getName)
-                        .toList()
-                        : Collections.emptyList();
+        ProblemDetail problem = problem(HttpStatus.BAD_REQUEST, "Request validation failed");
+        problem.setProperty("errors", sortedErrorMessages(exception));
 
-        List<String> errors =
-                ex.getBindingResult().getAllErrors().stream()
-                        .sorted(
-                                Comparator.comparingInt(
-                                        error -> {
-                                            if (error instanceof FieldError fieldError) {
-                                                return fieldsOrderDto.indexOf(
-                                                        fieldError.getField());
-                                            }
-                                            return Integer.MAX_VALUE;
-                                        }))
-                        .map(this::getErrorMessage)
-                        .toList();
-
-        body.put("errors", errors);
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
+        return ResponseEntity.badRequest().body(problem);
     }
 
-    private String getErrorMessage(ObjectError objectError) {
-        return objectError.getDefaultMessage();
+    @ExceptionHandler({
+            UserNotFoundException.class,
+            UserRoleNotFoundException.class,
+            ProjectNotFoundException.class,
+            TaskNotFoundException.class,
+            LabelNotFoundException.class,
+            DropBoxFileNotFoundException.class})
+    public ProblemDetail handleNotFound(RuntimeException exception) {
+
+        return problem(HttpStatus.NOT_FOUND, exception.getMessage());
     }
 
-    @ExceptionHandler(RegistrationException.class)
-    public ResponseEntity<Map<String, Object>> handleRegistrationException(
-            RegistrationException registrationException) {
+    @ExceptionHandler({RegistrationException.class, IllegalArgumentException.class})
+    public ProblemDetail handleBadRequest(RuntimeException exception) {
 
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now().format(formatter));
-        body.put("error", registrationException.getMessage());
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
+        return problem(HttpStatus.BAD_REQUEST, exception.getMessage());
     }
 
-    @ExceptionHandler(AuthenticationException.class)
-    public ResponseEntity<Map<String, Object>> handleAuthenticationException(
-            AuthenticationException authenticationException) {
+    @ExceptionHandler({
+            AuthenticationException.class,
+            JwtException.class,
+            ExpiredJwtException.class})
+    public ProblemDetail handleUnauthorized(RuntimeException exception) {
 
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now().format(formatter));
-        body.put("error", authenticationException.getMessage());
-
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
-    }
-
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> handleUserNotFoundException(
-            UserNotFoundException userNotFoundException) {
-
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now().format(formatter));
-        body.put("error", userNotFoundException.getMessage());
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
-    }
-
-    @ExceptionHandler(UserRoleNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> handleUserRoleNotFoundException(
-            UserRoleNotFoundException userRoleNotFoundException) {
-
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now().format(formatter));
-        body.put("error", userRoleNotFoundException.getMessage());
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
-    }
-
-    @ExceptionHandler(ProjectNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> handleProjectNotFoundException(
-            ProjectNotFoundException projectNotFoundException) {
-
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now().format(formatter));
-        body.put("error", projectNotFoundException.getMessage());
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
-    }
-
-    @ExceptionHandler(TaskNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> handleTaskNotFoundException(
-            TaskNotFoundException taskNotFoundException) {
-
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now().format(formatter));
-        body.put("error", taskNotFoundException.getMessage());
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
-    }
-
-    @ExceptionHandler(LabelNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> handleLabelNotFoundException(
-            LabelNotFoundException labelNotFoundException) {
-
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now().format(formatter));
-        body.put("error", labelNotFoundException.getMessage());
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
-    }
-
-    @ExceptionHandler(LabelAlreadyExistsException.class)
-    public ResponseEntity<Map<String, Object>> handleLabelAlreadyExistsException(
-            LabelAlreadyExistsException labelAlreadyExistsException) {
-
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now().format(formatter));
-        body.put("error", labelAlreadyExistsException.getMessage());
-
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
-    }
-
-    @ExceptionHandler(DropBoxDownloadException.class)
-    public ResponseEntity<Map<String, Object>> handleDropBoxDownloadException(
-            DropBoxDownloadException dropBoxDownloadException) {
-
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now().format(formatter));
-        body.put("error", dropBoxDownloadException.getMessage());
-
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
-    }
-
-    @ExceptionHandler(DropBoxUploadException.class)
-    public ResponseEntity<Map<String, Object>> handleDropBoxUploadException(
-            DropBoxUploadException dropBoxUploadException) {
-
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now().format(formatter));
-        body.put("error", dropBoxUploadException.getMessage());
-
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
-    }
-
-    @ExceptionHandler(DropBoxFileNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> handleDropBoxFileNotFoundException(
-            DropBoxFileNotFoundException dropBoxFileNotFoundException) {
-
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now().format(formatter));
-        body.put("error", dropBoxFileNotFoundException.getMessage());
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+        return problem(HttpStatus.UNAUTHORIZED, exception.getMessage());
     }
 
     @ExceptionHandler(ForbiddenActionException.class)
-    public ResponseEntity<Map<String, Object>> handleForbiddenActionException(
-            ForbiddenActionException forbiddenActionException) {
+    public ProblemDetail handleForbidden(ForbiddenActionException exception) {
 
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now().format(formatter));
-        body.put("error", forbiddenActionException.getMessage());
-
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(body);
+        return problem(HttpStatus.FORBIDDEN, exception.getMessage());
     }
 
-    @ExceptionHandler(JwtException.class)
-    public ResponseEntity<Object> handleJwtIsValidOrNotExistsException(JwtException jwtException) {
+    @ExceptionHandler({LabelAlreadyExistsException.class, IllegalStateException.class})
+    public ProblemDetail handleConflict(RuntimeException exception) {
 
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now().format(formatter));
-        body.put("error", jwtException.getMessage());
-
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
+        return problem(HttpStatus.CONFLICT, exception.getMessage());
     }
 
-    @ExceptionHandler(ExpiredJwtException.class)
-    public ResponseEntity<Object> handleExpiredJwtException(
-            ExpiredJwtException expiredJwtException) {
+    @ExceptionHandler({DropBoxUploadException.class, DropBoxDownloadException.class})
+    public ProblemDetail handleStorageFailure(RuntimeException exception) {
 
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now().format(formatter));
-        body.put("error", expiredJwtException.getMessage());
+        log.error("Dropbox request failed", exception);
 
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
+        return problem(HttpStatus.BAD_GATEWAY, STORAGE_UNAVAILABLE);
+    }
+
+    private ProblemDetail problem(HttpStatus status, String detail) {
+
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(status, detail);
+        problem.setTitle(status.getReasonPhrase());
+        problem.setProperty("timestamp", Instant.now());
+
+        return problem;
+    }
+
+    private List<String> sortedErrorMessages(MethodArgumentNotValidException exception) {
+
+        Object target = exception.getBindingResult().getTarget();
+
+        List<String> fieldsInDtoOrder = target == null
+                ? Collections.emptyList()
+                : Arrays.stream(target.getClass().getDeclaredFields())
+                        .map(Field::getName)
+                        .toList();
+
+        return exception.getBindingResult().getAllErrors().stream()
+                .sorted(Comparator.comparingInt(error -> positionOf(error, fieldsInDtoOrder)))
+                .map(ObjectError::getDefaultMessage)
+                .toList();
+    }
+
+    private int positionOf(ObjectError error, List<String> fieldsInDtoOrder) {
+
+        if (error instanceof FieldError fieldError) {
+            return fieldsInDtoOrder.indexOf(fieldError.getField());
+        }
+
+        return Integer.MAX_VALUE;
     }
 }

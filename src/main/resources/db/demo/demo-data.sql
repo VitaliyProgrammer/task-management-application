@@ -11,12 +11,14 @@ INSERT INTO users (email, password, first_name, last_name) VALUES
   ('andrii@alijenta.dev', '$2a$10$Sp3013RvPfRP.cO9ejoHcu77bv0JJAlyy5puCO0smAOZ9a98WV5jm', 'Andrii', 'Koval'),
   ('maria@alijenta.dev',  '$2a$10$Sp3013RvPfRP.cO9ejoHcu77bv0JJAlyy5puCO0smAOZ9a98WV5jm', 'Maria',  'Bondar');
 
+-- Roles are looked up by name, not by id, so the script does not depend on how they were seeded
 INSERT INTO users_roles (user_id, role_id)
-  SELECT id, 1 FROM users WHERE email = 'demo@alijenta.dev';
+  SELECT u.id, r.id FROM users u JOIN roles r ON r.role_name = 'ADMIN'
+  WHERE u.email = 'demo@alijenta.dev';
 
 INSERT INTO users_roles (user_id, role_id)
-  SELECT id, 2 FROM users
-  WHERE email IN ('olena@alijenta.dev', 'andrii@alijenta.dev', 'maria@alijenta.dev');
+  SELECT u.id, r.id FROM users u JOIN roles r ON r.role_name = 'USER'
+  WHERE u.email IN ('olena@alijenta.dev', 'andrii@alijenta.dev', 'maria@alijenta.dev');
 
 -- Projects
 INSERT INTO projects (name, description, start_date, end_date, status) VALUES

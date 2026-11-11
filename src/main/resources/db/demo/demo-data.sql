@@ -1,0 +1,93 @@
+-- Demo workspace for visitors of the live site.
+-- Demo login: demo@alijenta.dev / Alijenta2026 (role ADMIN).
+--
+-- Used by Liquibase (changeset "insert-demo-data", context "demo") on a fresh database
+-- and by DemoDataResetService, which wipes the data and runs this script again.
+
+-- Team: one admin (the demo login) and three members
+INSERT INTO users (email, password, first_name, last_name) VALUES
+  ('demo@alijenta.dev',   '$2a$10$Sp3013RvPfRP.cO9ejoHcu77bv0JJAlyy5puCO0smAOZ9a98WV5jm', 'Demo',   'Admin'),
+  ('olena@alijenta.dev',  '$2a$10$Sp3013RvPfRP.cO9ejoHcu77bv0JJAlyy5puCO0smAOZ9a98WV5jm', 'Olena',  'Shevchenko'),
+  ('andrii@alijenta.dev', '$2a$10$Sp3013RvPfRP.cO9ejoHcu77bv0JJAlyy5puCO0smAOZ9a98WV5jm', 'Andrii', 'Koval'),
+  ('maria@alijenta.dev',  '$2a$10$Sp3013RvPfRP.cO9ejoHcu77bv0JJAlyy5puCO0smAOZ9a98WV5jm', 'Maria',  'Bondar');
+
+-- Roles are looked up by name, not by id, so the script does not depend on how they were seeded
+INSERT INTO users_roles (user_id, role_id)
+  SELECT u.id, r.id FROM users u JOIN roles r ON r.role_name = 'ADMIN'
+  WHERE u.email = 'demo@alijenta.dev';
+
+INSERT INTO users_roles (user_id, role_id)
+  SELECT u.id, r.id FROM users u JOIN roles r ON r.role_name = 'USER'
+  WHERE u.email IN ('olena@alijenta.dev', 'andrii@alijenta.dev', 'maria@alijenta.dev');
+
+-- Projects
+INSERT INTO projects (name, description, start_date, end_date, status) VALUES
+  ('Task Manager UI', 'React frontend for the task management API.',
+    DATE_SUB(CURDATE(), INTERVAL 10 DAY), DATE_ADD(CURDATE(), INTERVAL 40 DAY), 'IN_PROGRESS'),
+  ('Integrations', 'Telegram, Email, Google Calendar and Dropbox.',
+    DATE_SUB(CURDATE(), INTERVAL 25 DAY), DATE_ADD(CURDATE(), INTERVAL 25 DAY), 'IN_PROGRESS'),
+  ('DevOps', 'CI pipeline, Docker images and deployment.',
+    DATE_ADD(CURDATE(), INTERVAL 10 DAY), DATE_ADD(CURDATE(), INTERVAL 65 DAY), 'INITIATED'),
+  ('Docs', 'README, API docs and architecture diagrams.',
+    DATE_ADD(CURDATE(), INTERVAL 5 DAY), DATE_ADD(CURDATE(), INTERVAL 20 DAY), 'INITIATED'),
+  ('Security', 'JWT authentication and role-based access.',
+    DATE_SUB(CURDATE(), INTERVAL 40 DAY), DATE_SUB(CURDATE(), INTERVAL 5 DAY), 'COMPLETED');
+
+-- Labels (INSERT IGNORE keeps labels that already exist)
+INSERT IGNORE INTO labels (name, color, description) VALUES
+  ('frontend', '#24955A', 'React, CSS and UI work'),
+  ('backend',  '#0EA5E9', 'Spring Boot services and API'),
+  ('design',   '#DB2777', 'Mockups and visual design'),
+  ('devops',   '#8B5CF6', 'CI/CD, Docker, deployment'),
+  ('docs',     '#F59E0B', 'README and documentation');
+
+-- Tasks
+INSERT INTO tasks (title, description, task_priority, task_status, due_date, project_id, assignee_id) VALUES
+  ('Design login page', 'Split layout with brand panel and the login form.', 'HIGH', 'NOT_STARTED',
+    DATE_ADD(CURDATE(), INTERVAL 4 DAY),
+    (SELECT id FROM projects WHERE name = 'Task Manager UI' ORDER BY id DESC LIMIT 1),
+    (SELECT id FROM users WHERE email = 'olena@alijenta.dev')),
+  ('Set up frontend CI', 'Lint and build the frontend on every pull request.', 'MEDIUM', 'NOT_STARTED',
+    DATE_ADD(CURDATE(), INTERVAL 8 DAY),
+    (SELECT id FROM projects WHERE name = 'DevOps' ORDER BY id DESC LIMIT 1),
+    (SELECT id FROM users WHERE email = 'maria@alijenta.dev')),
+  ('Write API README', 'Describe endpoints, errors and the demo account.', 'LOW', 'NOT_STARTED',
+    DATE_ADD(CURDATE(), INTERVAL 11 DAY),
+    (SELECT id FROM projects WHERE name = 'Docs' ORDER BY id DESC LIMIT 1),
+    (SELECT id FROM users WHERE email = 'demo@alijenta.dev')),
+  ('Kanban board view', 'Columns by status with priority badges.', 'HIGH', 'IN_PROGRESS',
+    DATE_ADD(CURDATE(), INTERVAL 2 DAY),
+    (SELECT id FROM projects WHERE name = 'Task Manager UI' ORDER BY id DESC LIMIT 1),
+    (SELECT id FROM users WHERE email = 'demo@alijenta.dev')),
+  ('Telegram notifications', 'Send a task to the assignee chat through the bot.', 'MEDIUM', 'IN_PROGRESS',
+    DATE_ADD(CURDATE(), INTERVAL 5 DAY),
+    (SELECT id FROM projects WHERE name = 'Integrations' ORDER BY id DESC LIMIT 1),
+    (SELECT id FROM users WHERE email = 'andrii@alijenta.dev')),
+  ('JWT authentication', 'Stateless login with USER and ADMIN roles.', 'HIGH', 'COMPLETED',
+    DATE_SUB(CURDATE(), INTERVAL 7 DAY),
+    (SELECT id FROM projects WHERE name = 'Security' ORDER BY id DESC LIMIT 1),
+    (SELECT id FROM users WHERE email = 'demo@alijenta.dev')),
+  ('Dropbox attachments', 'Upload and download task files.', 'LOW', 'COMPLETED',
+    DATE_SUB(CURDATE(), INTERVAL 4 DAY),
+    (SELECT id FROM projects WHERE name = 'Integrations' ORDER BY id DESC LIMIT 1),
+    (SELECT id FROM users WHERE email = 'andrii@alijenta.dev'));
+
+-- Task labels
+INSERT INTO tasks_labels (task_id, label_id)
+  SELECT t.id, l.id FROM tasks t JOIN labels l
+    ON (t.title = 'Design login page'      AND l.name IN ('frontend', 'design'))
+    OR (t.title = 'Set up frontend CI'     AND l.name = 'devops')
+    OR (t.title = 'Write API README'       AND l.name = 'docs')
+    OR (t.title = 'Kanban board view'      AND l.name = 'frontend')
+    OR (t.title = 'Telegram notifications' AND l.name = 'backend')
+    OR (t.title = 'JWT authentication'     AND l.name = 'backend')
+    OR (t.title = 'Dropbox attachments'    AND l.name = 'backend');
+
+-- Comments
+INSERT INTO comments (text, task_id, user_id, timestamp) VALUES
+  ('Please keep the demo hint visible on the login page.',
+    (SELECT id FROM tasks WHERE title = 'Design login page' ORDER BY id DESC LIMIT 1),
+    (SELECT id FROM users WHERE email = 'demo@alijenta.dev'), NOW()),
+  ('Done in the mockup, uploading the export now.',
+    (SELECT id FROM tasks WHERE title = 'Design login page' ORDER BY id DESC LIMIT 1),
+    (SELECT id FROM users WHERE email = 'olena@alijenta.dev'), NOW());

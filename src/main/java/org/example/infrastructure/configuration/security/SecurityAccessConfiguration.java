@@ -43,6 +43,8 @@ public class SecurityAccessConfiguration {
                                                 "/auth/**",
                                                 "/swagger-ui/**",
                                                 "/v3/api-docs/**",
+                                                "/actuator/health",
+                                                "/actuator/health/**",
                                                 "/oauth/google-calendar/callback")
                                         .permitAll()
                                         .anyRequest()

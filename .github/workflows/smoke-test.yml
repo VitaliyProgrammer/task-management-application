@@ -1,0 +1,62 @@
+name: Live demo smoke test
+
+# Walks the path an employer takes on the live demo, once a day. If any step fails, the
+# run fails and GitHub emails the repository owner.
+#
+# Needs two repository variables (Settings → Secrets and variables → Actions → Variables):
+#   API_URL       e.g. https://alijenta-api.onrender.com
+#   FRONTEND_URL  e.g. https://alijenta.vercel.app
+#
+# Note: GitHub disables scheduled workflows in a public repository after 60 days without
+# activity. UptimeRobot (docs/DEPLOYMENT.md) is the primary monitor; this is the deeper check.
+on:
+  schedule:
+    - cron: '30 6 * * *' # 06:30 UTC, after the 03:00 UTC demo data reset
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    name: Frontend, health, login and data
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    env:
+      API_URL: ${{ vars.API_URL }}
+      FRONTEND_URL: ${{ vars.FRONTEND_URL }}
+      DEMO_EMAIL: demo@alijenta.dev
+      DEMO_PASSWORD: Alijenta2026
+
+    steps:
+      - name: Check configuration
+        run: |
+          if [ -z "$API_URL" ] || [ -z "$FRONTEND_URL" ]; then
+            echo "::error::Set the API_URL and FRONTEND_URL repository variables"
+            exit 1
+          fi
+
+      - name: Frontend opens
+        run: curl --fail --silent --show-error --retry 3 --retry-delay 20 --max-time 60 "$FRONTEND_URL" -o /dev/null
+
+      # The free backend may be waking up: retry for a few minutes before failing
+      - name: Backend is healthy (database and Dropbox)
+        run: |
+          curl --fail --silent --show-error --retry 6 --retry-delay 30 --retry-all-errors \
+            --max-time 90 "$API_URL/actuator/health" | tee health.json
+          grep -q '"status":"UP"' health.json
+
+      - name: Demo login works
+        run: |
+          TOKEN=$(curl --fail --silent --show-error --max-time 60 \
+            -H 'Content-Type: application/json' \
+            -d "{\"email\":\"$DEMO_EMAIL\",\"password\":\"$DEMO_PASSWORD\"}" \
+            "$API_URL/auth/login" | jq -r '.token')
+          test -n "$TOKEN" && test "$TOKEN" != "null"
+          echo "::add-mask::$TOKEN"
+          echo "TOKEN=$TOKEN" >> "$GITHUB_ENV"
+
+      - name: Demo data is there
+        run: |
+          COUNT=$(curl --fail --silent --show-error --max-time 60 \
+            -H "Authorization: Bearer $TOKEN" "$API_URL/tasks?size=1" | jq '.totalElements')
+          echo "Tasks in the demo workspace: $COUNT"
+          test "$COUNT" -gt 0

@@ -9,12 +9,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.application.service.DropBoxService;
 import org.example.infrastructure.exception.integration.DropBoxDownloadException;
 import org.example.infrastructure.exception.integration.DropBoxUploadException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class DropBoxServiceImpl implements DropBoxService {
@@ -51,6 +53,20 @@ public class DropBoxServiceImpl implements DropBoxService {
         } catch (IOException | DbxException exception) {
             throw new DropBoxDownloadException("Failed to download file from DropBox!: "
                     + exception);
+        }
+    }
+
+    @Override
+    public boolean deleteFile(String dropBoxField) {
+
+        try {
+            dbxClient.files().deleteV2(dropBoxField);
+
+            return true;
+        } catch (DbxException exception) {
+            log.warn("Failed to delete Dropbox file {}: {}", dropBoxField, exception.getMessage());
+
+            return false;
         }
     }
 }

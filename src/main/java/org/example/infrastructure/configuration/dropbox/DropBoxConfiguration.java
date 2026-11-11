@@ -2,6 +2,7 @@ package org.example.infrastructure.configuration.dropbox;
 
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.http.StandardHttpRequestor;
+import com.dropbox.core.oauth.DbxCredential;
 import com.dropbox.core.v2.DbxClientV2;
 import java.io.File;
 import java.io.FileInputStream;
@@ -34,6 +35,8 @@ public class DropBoxConfiguration {
 
     private static final String CERTIFICATE_PATH = "dropbox/dropboxSSL.crt";
 
+    private static final long ALREADY_EXPIRED = 0L;
+
     private final DropBoxProperties dropBoxProperties;
 
     @Bean
@@ -49,7 +52,37 @@ public class DropBoxConfiguration {
             log.info("No custom Dropbox certificate found, using the default JDK trust store");
         }
 
-        return new DbxClientV2(builder.build(), dropBoxProperties.accessToken());
+        return new DbxClientV2(builder.build(), credential());
+    }
+
+    /**
+     * With a refresh token the access token starts as "already expired" (expiresAt = 0), so the
+     * SDK fetches a fresh one before the first call and renews it automatically afterwards.
+     */
+    private DbxCredential credential() {
+
+        if (dropBoxProperties.usesRefreshToken()) {
+            log.info("Dropbox: using refresh token, access tokens are renewed automatically");
+
+            return new DbxCredential(
+                    "",
+                    ALREADY_EXPIRED,
+                    dropBoxProperties.refreshToken(),
+                    dropBoxProperties.appKey(),
+                    dropBoxProperties.appSecret());
+        }
+
+        String accessToken = dropBoxProperties.accessToken();
+
+        if (accessToken == null || accessToken.isBlank()) {
+            throw new IllegalStateException(
+                    "Dropbox is not configured: set dropbox.refresh-token, dropbox.app-key and "
+                            + "dropbox.app-secret (or dropbox.access-token for local development)");
+        }
+
+        log.warn("Dropbox: using a short-lived access token, it stops working after ~4 hours");
+
+        return new DbxCredential(accessToken);
     }
 
     private StandardHttpRequestor requestorTrusting(ClassPathResource certificate)

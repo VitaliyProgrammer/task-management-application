@@ -63,7 +63,8 @@ class DemoDataResetServiceTest {
         assertEquals(4, count("SELECT COUNT(*) FROM users"));
         assertEquals(5, count("SELECT COUNT(*) FROM projects"));
         assertEquals(5, count("SELECT COUNT(*) FROM labels"));
-        assertEquals(1, count("SELECT COUNT(*) FROM users_roles WHERE role_id = 1"));
+        assertEquals(1, count("SELECT COUNT(*) FROM users_roles ur "
+                + "JOIN roles r ON r.id = ur.role_id WHERE r.role_name = 'ADMIN'"));
         verify(dropBoxService, never()).deleteFile(anyString());
     }
 

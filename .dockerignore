@@ -1,0 +1,17 @@
+# Only pom.xml and src/ are needed to build the image.
+
+# Local secrets must never end up inside an image
+.env
+src/main/resources/application.properties
+src/main/resources/google/credentials.json
+src/main/resources/dropbox/dropboxSSL.crt
+
+# Not part of the backend build
+frontend/
+target/
+.git/
+.github/
+.idea/
+.claude/
+*.png
+*.md

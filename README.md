@@ -24,6 +24,18 @@
 ![Telegram](https://img.shields.io/badge/Telegram-Bot%20API-26A5E4)
 ![Swagger](https://img.shields.io/badge/Swagger%20UI-5.13-85EA2D)
 
+## 🌐 [Alijenta: live demo](https://alijenta.vercel.app)
+
+| | |
+|---|---|
+| **App** | [alijenta.vercel.app](https://alijenta.vercel.app) |
+| **API docs** | [Swagger UI](https://alijenta-api.onrender.com/swagger-ui/index.html) |
+| **Demo login** | `demo@alijenta.dev` / `Alijenta2026` (ADMIN) |
+
+The demo runs on free plans (Vercel, Render, TiDB Cloud, Dropbox) and is monitored around the
+clock. Demo data is reset every day at 03:00 UTC, so feel free to create, edit and delete
+anything. How it is hosted: [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
+
 ## 📌 Introduction
 
 **Task Management Application** is a production-style back-end system designed to
@@ -305,6 +317,13 @@ Includes:
 
 ## 🐳 Infrastructure & Deployment
 
+The live demo is deployed from `main` automatically after CI passes: the backend as a Docker
+image on Render (`render.yaml`), the frontend on Vercel, the database on TiDB Cloud
+(MySQL-compatible). All secrets come from environment variables; the `prod` profile
+(`application-prod.properties`) contains none. Monitoring: UptimeRobot checks
+`/actuator/health` (database + Dropbox) every 5 minutes, and a daily GitHub Actions smoke test
+logs in with the demo account. Full guide: [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
+
 The application is fully containerized using Docker and Docker Compose.
 
 Docker Compose orchestrates:
@@ -342,13 +361,15 @@ A web browser (to access Swagger UI)
  ```bash  
   git clone https://github.com/VitaliyProgrammer/task-management-application.git
   cd task-management-application
+  cp .env.template .env   # then fill in the values
   docker compose up --build
   ```
 
-Application will be available at:
+Docker Compose runs the same image and `prod` profile as the live demo, with a local MySQL.
+Application will be available at (`SPRING_LOCAL_PORT` from `.env`):
 
 ```bash 
-http://localhost:8080
+http://localhost:8081
 ```
 
 🛑 Stop the Application
